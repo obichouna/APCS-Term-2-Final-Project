@@ -1,0 +1,11 @@
+import java.util.*;
+
+public abstract Entity {
+
+    public float xCor, yCor;
+    //public PImage sprite;
+    public List<Pokemon> pokemon;
+
+    public abstract void draw ();
+
+}
