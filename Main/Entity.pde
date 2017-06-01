@@ -2,7 +2,7 @@ import java.util.*;
 
 public abstract class Entity {
 
-  public float xCor, yCor;
+  public float xCor, yCor, direction;
   //public PImage sprite;
   //public List<Pokemon> pokemon;
 
