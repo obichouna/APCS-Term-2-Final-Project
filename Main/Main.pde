@@ -8,6 +8,7 @@ public void setup () {
 }
 
 public void draw () {
+  background(0, 0, 255);
   player.draw();
   //fill(255, 255, 255);
   //rect(50, 50, 100, 100);
@@ -15,32 +16,37 @@ public void draw () {
 
 public void keyPressed () {
   if (key == 'w') {
-    player.yCor -= speed;
+    move(0, -1 * speed);
   }
   if (key == 'a') {
-    player.xCor -= speed;
+    move(-1 * speed, 0);
   }
   if (key == 's') {
-    player.yCor += speed;
+    move(0, speed);
   }
   if (key == 'd') {
-    player.xCor += speed;
+    move(speed, 0);
   }
+}
+
+public void move (float deltaX, float deltaY) {
+  player.xCor += deltaX;
+  player.yCor += deltaY;
 }
 
 /*
 void keyReleased() {
-  if (key == 'w') {
-    player.direction =
-  }
-  if (key == 'a') {
-    player.direction =
-  }
-  if (key == 's') {
-    player.direction =
-  }
-  if (key == 'd') {
-    player.direction =
-  }
-}
-*/
+ if (key == 'w') {
+ player.direction =
+ }
+ if (key == 'a') {
+ player.direction =
+ }
+ if (key == 's') {
+ player.direction =
+ }
+ if (key == 'd') {
+ player.direction =
+ }
+ }
+ */
