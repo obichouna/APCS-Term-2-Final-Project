@@ -1,5 +1,7 @@
 Player player;
 float speed = 10;
+String state = "battle";
+Battle battle;
 
 public void setup () {
   size(500, 500);
@@ -8,10 +10,15 @@ public void setup () {
 }
 
 public void draw () {
-  background(0, 0, 255);
-  player.draw();
-  //fill(255, 255, 255);
-  //rect(50, 50, 100, 100);
+  if (state == "map") {
+    background(0, 0, 255);
+    player.draw();
+    //fill(255, 255, 255);
+    //rect(50, 50, 100, 100);
+  }
+  if (state == "battle") {
+    background(255, 255, 255);
+  }
 }
 
 public void keyPressed () {
