@@ -1,30 +1,34 @@
+Player player;
+float speed = 10;
+
 public void setup () {
   size(500, 500);
   background(0, 0, 0);
-
-  Player player = new Player();
+  player = new Player(width / 2, height / 2);
 }
 
 public void draw () {
-  fill(255, 255, 255);
+  player.draw();
+  //fill(255, 255, 255);
+  //rect(50, 50, 100, 100);
 }
 
 public void keyPressed () {
   if (key == 'w') {
-    player.direction = -1;
+    player.yCor -= speed;
   }
   if (key == 'a') {
-    player.direction = -1;
+    player.xCor -= speed;
   }
   if (key == 's') {
-    player.direction = 1;
+    player.yCor += speed;
   }
   if (key == 'd') {
-    player.direction = 1;
+    player.xCor += speed;
   }
 }
 
-
+/*
 void keyReleased() {
   if (key == 'w') {
     player.direction =
@@ -39,3 +43,4 @@ void keyReleased() {
     player.direction =
   }
 }
+*/
