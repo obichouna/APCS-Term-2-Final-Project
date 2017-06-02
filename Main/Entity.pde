@@ -16,7 +16,7 @@ public class Player extends Entity {
   public Player(float x, float y) {
     xCor = x;
     yCor = y;
-    //party.add(new Pikachu(true));
+    //party.add(new Pokemon(0));
   }
 
   public void draw () {
