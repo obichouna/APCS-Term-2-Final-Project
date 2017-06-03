@@ -7,6 +7,8 @@ public void setup () {
   size(500, 500);
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
+  battle = new Battle(player, new Enemy(0, 0));
+  System.out.println(battle.yourPoke.name);
 }
 
 public void draw () {
@@ -17,7 +19,7 @@ public void draw () {
     //rect(50, 50, 100, 100);
   }
   if (state == "battle") {
-    background(255, 255, 255);
+    battle.draw();
   }
 }
 

@@ -16,7 +16,7 @@ public class Player extends Entity {
   public Player (float x, float y) {
     xCor = x;
     yCor = y;
-    //party.add(new Pokemon(0));
+    party.add(new Pokemon(0));
   }
 
   public void draw () {
@@ -30,7 +30,10 @@ public class Player extends Entity {
 public class Enemy extends Entity {
   public Stack<Pokemon> party = new Stack<Pokemon>();
 
-  public Enemy () {
+  public Enemy (float x, float y) {
+    xCor = x;
+    yCor = y;
+    party.push(new Pokemon(0));
   }
 
   public void draw () {
