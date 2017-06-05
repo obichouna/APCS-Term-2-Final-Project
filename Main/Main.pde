@@ -25,20 +25,20 @@ public void draw () {
 
 public void keyPressed () {
   if (key == 'w') {
-    move(0, -1 * speed);
+    walk(0, -1 * speed);
   }
   if (key == 'a') {
-    move(-1 * speed, 0);
+    walk(-1 * speed, 0);
   }
   if (key == 's') {
-    move(0, speed);
+    walk(0, speed);
   }
   if (key == 'd') {
-    move(speed, 0);
+    walk(speed, 0);
   }
 }
 
-public void move (float deltaX, float deltaY) {
+public void walk (float deltaX, float deltaY) {
   player.xCor += deltaX;
   player.yCor += deltaY;
 }
