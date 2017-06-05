@@ -23,6 +23,10 @@ public class Pokemon{
         sAtt = scan.nextInt();
         sDef = scan.nextInt();
         spd = scan.nextInt();
+        moves.add(move(scan.nextInt()));
+        moves.add(move(scan.nextInt()));
+        moves.add(move(scan.nextInt()));
+        moves.add(move(scan.nextInt()));
     }
 
 
