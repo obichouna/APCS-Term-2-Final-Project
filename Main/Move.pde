@@ -21,5 +21,4 @@ public class Move {
     acc = scan.nextInt();
     phys = scan.nextBoolean();
   }
-  
 }

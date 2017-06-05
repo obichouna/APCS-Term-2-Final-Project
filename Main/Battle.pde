@@ -10,9 +10,10 @@ public class Battle {
     player = p;
     enemy = e;
     yourPoke = player.party.get(0);
+    enemyPoke = enemy.party.pop();
     maxHP = yourPoke.hp;
     maxEHP = enemyPoke.hp;
-    enemyPoke = enemy.party.pop();
+    System.out.println(maxHP + " " + maxEHP);
   }
 
   public void draw () {
