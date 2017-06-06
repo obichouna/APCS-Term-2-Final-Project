@@ -1,6 +1,21 @@
-public class Battle {
+public abstract class Scene {
 
   public Player player;
+
+  public abstract void draw ();
+}
+
+public class Map extends Scene {
+  
+  
+  
+  public void draw () {
+     background(0, 255, 0); 
+  }
+}
+
+public class Battle extends Scene {
+
   public Enemy enemy;
   public Pokemon yourPoke, enemyPoke;
   public boolean isYourTurn = true;

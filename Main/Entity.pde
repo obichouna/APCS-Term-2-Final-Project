@@ -22,7 +22,7 @@ public class Player extends Entity {
   public void draw () {
     //imageMode(CENTER);
     //image(img, xCor, yCor, 10, 10);
-    fill(255, 0, 0);
+    fill(0, 0, 255);
     rect(xCor, yCor, 10, 10);
   }
 }
@@ -37,5 +37,7 @@ public class Enemy extends Entity {
   }
 
   public void draw () {
+    fill(255, 0, 0);
+    rect(xCor, yCor, 10, 10);
   }
 }

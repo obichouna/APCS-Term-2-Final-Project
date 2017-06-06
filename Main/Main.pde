@@ -1,20 +1,25 @@
 Player player;
 float speed = 10;
-String state = "battle";
+String state = "map";
 Battle battle;
+Enemy e;
 
 public void setup () {
   size(500, 500);
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
-  battle = new Battle(player, new Enemy(0, 0));
-  System.out.println(battle.yourPoke.name);
+  //battle = new Battle(player, new Enemy(0, 0));
+  e = new Enemy(50, 50);
+  //System.out.println(battle.yourPoke.name);
 }
 
 public void draw () {
   if (state == "map") {
-    background(0, 0, 255);
+    background(0, 255, 0);
     player.draw();
+    e.draw();
+    e.xCor++;
+    e.yCor++;
     //fill(255, 255, 255);
     //rect(50, 50, 100, 100);
   }
