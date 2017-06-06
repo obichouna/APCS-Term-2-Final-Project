@@ -8,17 +8,21 @@ public class Pokemon {
   public ArrayList<Move> moves = new ArrayList<Move>(4);
   public String type;
 
-  public Pokemon(float id) {
+  public Pokemon(int id) {
     try {
-      Scanner scan = new Scanner(new File("Pokemon.txt"));
+      Bufferedreader reader = createReader("Pokemon.txt");
       while (id != 0) {
         scan.nextLine();
         id--;
       }
       name = scan.next();
+      //System.out.println(name);
       type = scan.next();
+      //System.out.println(type);
       lvl = scan.nextInt();
+      //System.out.println(lvl);
       hp = scan.nextInt();
+      //System.out.println(hp);
       att = scan.nextInt();
       def = scan.nextInt();
       sAtt = scan.nextInt();
@@ -30,6 +34,7 @@ public class Pokemon {
       moves.add(new Move(scan.nextInt()));
     } 
     catch (Exception e) {
+      System.out.println("File not found");
     }
   }
 }

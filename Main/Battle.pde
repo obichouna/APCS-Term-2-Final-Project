@@ -47,8 +47,8 @@ public class Battle {
     rect(15, 65, 190, 10, 90);
     rect(width / 2 + 45, 345, 190, 10, 90);
     fill(0, 255, 0);
-    rect(15, 65, enemyPoke.hp * (190 / maxEHP), 10, 90);
-    rect(width / 2 + 45, 345, yourPoke.hp * (190 / maxHP), 10, 90);
+    //rect(15, 65, enemyPoke.hp * (190 / maxEHP), 10, 90);
+    //rect(width / 2 + 45, 345, yourPoke.hp * (190 / maxHP), 10, 90);
   }
 
   public void yourTurn () {
