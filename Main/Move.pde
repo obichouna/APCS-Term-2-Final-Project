@@ -10,18 +10,21 @@ public class Move {
 
   public Move(int id) {
     try {
-      Scanner scan = new Scanner(new File("Moves.txt"));
+      BufferedReader reader = createReader("Moves.txt");
+      String line = "";
       while (id != 0) {
-        scan.nextLine();
+        reader.readLine();
         id--;
       }
-      name = scan.next();
-      type = scan.next();
-      effect = scan.next();
-      dmg = scan.nextInt();
-      pp = scan.nextInt();
-      acc = scan.nextInt();
-      phys = scan.nextBoolean();
+      line = reader.readLine();
+      String[] data = line.split("\\s+");
+      name = data[0];
+      type = data[1];
+      effect = data[2];
+      dmg = Integer.parseInt(data[3]);
+      pp = Integer.parseInt(data[4]);
+      acc = Integer.parseInt(data[5]);
+      phys = Boolean.parseBoolean(data[6]);
     }
     catch (Exception e) {
     }

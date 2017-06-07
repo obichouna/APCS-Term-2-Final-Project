@@ -10,28 +10,23 @@ public class Pokemon {
 
   public Pokemon(int id) {
     try {
-      Bufferedreader reader = createReader("Pokemon.txt");
+      BufferedReader reader = createReader("Pokemon.txt");
+      String line = "";
       while (id != 0) {
-        scan.nextLine();
+        reader.readLine();
         id--;
       }
-      name = scan.next();
-      //System.out.println(name);
-      type = scan.next();
-      //System.out.println(type);
-      lvl = scan.nextInt();
-      //System.out.println(lvl);
-      hp = scan.nextInt();
-      //System.out.println(hp);
-      att = scan.nextInt();
-      def = scan.nextInt();
-      sAtt = scan.nextInt();
-      sDef = scan.nextInt();
-      spd = scan.nextInt();
-      moves.add(new Move(scan.nextInt()));
-      moves.add(new Move(scan.nextInt()));
-      moves.add(new Move(scan.nextInt()));
-      moves.add(new Move(scan.nextInt()));
+      line = reader.readLine();
+      String[] data = line.split("\\s+");
+      name = data[0];
+      type = data[1];
+      lvl = Integer.parseInt(data[2]);
+      hp = Integer.parseInt(data[3]);
+      att = Integer.parseInt(data[4]);
+      def = Integer.parseInt(data[5]);
+      sAtt = Integer.parseInt(data[6]);
+      sDef = Integer.parseInt(data[7]);
+      spd = Integer.parseInt(data[8]);
     } 
     catch (Exception e) {
       System.out.println("File not found");
