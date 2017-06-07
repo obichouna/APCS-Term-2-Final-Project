@@ -27,6 +27,10 @@ public class Pokemon {
       sAtt = Integer.parseInt(data[6]);
       sDef = Integer.parseInt(data[7]);
       spd = Integer.parseInt(data[8]);
+      moves.add(new Move(Integer.parseInt(data[9])));
+      moves.add(new Move(Integer.parseInt(data[10])));
+      moves.add(new Move(Integer.parseInt(data[11])));
+      moves.add(new Move(Integer.parseInt(data[12])));
     } 
     catch (Exception e) {
       System.out.println("File not found");
