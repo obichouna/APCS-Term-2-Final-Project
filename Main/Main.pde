@@ -1,27 +1,26 @@
 Player player;
-float speed = 10;
+float speed = 15;
 String state = "map";
 Battle battle;
 Enemy e;
+boolean showEnemy = true;
 
 public void setup () {
   size(500, 500);
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
   //battle = new Battle(player, new Enemy(0, 0));
-  e = new Enemy(50, 50);
-  //System.out.println(battle.yourPoke.name);
+  e = new Enemy(210, 210);
 }
 
 public void draw () {
   if (state == "map") {
     background(0, 255, 0);
     player.draw();
-    e.draw();
-    e.xCor++;
-    e.yCor++;
-    //fill(255, 255, 255);
-    //rect(50, 50, 100, 100);
+    if (showEnemy) {
+      e.draw();
+      e.fight(player);
+    }
   }
   if (state == "battle") {
     battle.draw();
@@ -29,23 +28,50 @@ public void draw () {
 }
 
 public void keyPressed () {
-  if (key == 'w') {
-    walk(0, -1 * speed);
+
+  // Movement
+  if (state == "map") {
+    if (key == 'w') {
+      walk(0, -1 * speed);
+    }
+    if (key == 'a') {
+      walk(-1 * speed, 0);
+    }
+    if (key == 's') {
+      walk(0, speed);
+    }
+    if (key == 'd') {
+      walk(speed, 0);
+    }
   }
-  if (key == 'a') {
-    walk(-1 * speed, 0);
-  }
-  if (key == 's') {
-    walk(0, speed);
-  }
-  if (key == 'd') {
-    walk(speed, 0);
+
+  if (state == "battle") {
+    if (key == 'l') {
+      battle.yourPoke.hp--;
+    }
+    if (key == 'w') {
+      battle.enemyPoke.hp--;
+    }
+    if (key == ENTER && battle.winScreen) {
+      battle = null;
+      state = "map";
+    }
   }
 }
 
 public void walk (float deltaX, float deltaY) {
   player.xCor += deltaX;
   player.yCor += deltaY;
+  encounter();
+}
+
+// For demo purposes
+public void encounter () {
+  int rand = floor(random(40));
+  if (rand == 13) {
+    battle = new Battle(player, new Enemy(0, 0));
+    state = "battle";
+  }
 }
 
 /*

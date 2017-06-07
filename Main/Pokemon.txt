@@ -1,1 +1,1 @@
-Pikachu Electric 50 10 10 10 10 10 10 0 1 2 3
+Pikachu Electric 50 10 10 10 10 10 10 0 1 2 3 Pikachu.png Pikachu_back.png

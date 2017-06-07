@@ -4,7 +4,7 @@ import java.io.File;
 public class Pokemon {
   public String name;
   public int hp, att, def, sAtt, sDef, spd, lvl;
-  public PImage picture;
+  public PImage front, back;
   public ArrayList<Move> moves = new ArrayList<Move>(4);
   public String type;
 
@@ -27,6 +27,8 @@ public class Pokemon {
       sAtt = Integer.parseInt(data[6]);
       sDef = Integer.parseInt(data[7]);
       spd = Integer.parseInt(data[8]);
+      front = loadImage(data[13]);
+      back = loadImage(data[14]);
     } 
     catch (Exception e) {
       System.out.println("File not found");
