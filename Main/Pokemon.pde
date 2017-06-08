@@ -3,7 +3,7 @@ import java.io.File;
 
 public class Pokemon {
   public String name;
-  public int hp, att, def, sAtt, sDef, spd, lvl;
+  public int hp, att, def, sAtt, sDef, spd, lvl, maxHP;
   public PImage front, back;
   public ArrayList<Move> moves = new ArrayList<Move>(4);
   public String type;
@@ -22,6 +22,7 @@ public class Pokemon {
       type = data[1];
       lvl = Integer.parseInt(data[2]);
       hp = Integer.parseInt(data[3]);
+      maxHP = hp;
       att = Integer.parseInt(data[4]);
       def = Integer.parseInt(data[5]);
       sAtt = Integer.parseInt(data[6]);

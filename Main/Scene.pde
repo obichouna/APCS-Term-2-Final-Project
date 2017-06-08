@@ -26,9 +26,9 @@ public class Battle extends Scene {
     enemy = e;
     yourPoke = player.party.get(0);
     enemyPoke = enemy.party.pop();
-    maxHP = yourPoke.hp;
-    maxEHP = enemyPoke.hp;
-    System.out.println(maxHP + " " + maxEHP);
+    maxHP = yourPoke.maxHP;
+    maxEHP = enemyPoke.maxHP;
+    System.out.println(yourPoke.hp * (190.0 / maxHP));
   }
 
   public void draw () {
@@ -77,12 +77,14 @@ public class Battle extends Scene {
     text(yourPoke.name, 295, 340);
     text(enemyPoke.name, 15, 60);
     textSize(20);
-    text("" + yourPoke.hp + "/" + maxHP, 420, 375);
+    text("" + yourPoke.hp + "/" + maxHP, 295, 375);
+    // Health bar base
     rect(15, 65, 190, 10, 90);
     rect(width / 2 + 45, 345, 190, 10, 90);
+    // Health bar top
     fill(0, 255, 0);
-    rect(15, 65, enemyPoke.hp * (190 / maxEHP), 10, 90);
-    rect(width / 2 + 45, 345, yourPoke.hp * (190 / maxHP), 10, 90);
+    rect(15, 65, enemyPoke.hp * (190.0 / maxEHP), 10, 90);
+    rect(width / 2 + 45, 345, yourPoke.hp * (190.0 / maxHP), 10, 90);
   }
 
   public void update () {
