@@ -10,7 +10,7 @@ public void setup () {
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
   battle = new Battle(player, new Enemy(0, 0));
-  battle.choice = "fight";
+  //battle.choice = "fight";
   e = new Enemy(210, 210);
 }
 
@@ -51,7 +51,7 @@ public void keyPressed () {
       battle.choice = "none";
     }
     // Main battle screen
-    if (battle.choice.equals("none") {
+    if (battle.choice.equals("none")) {
       if (key == '1') {
         battle.choice = "fight";
       }
