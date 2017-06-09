@@ -10,6 +10,7 @@ public void setup () {
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
   battle = new Battle(player, new Enemy(0, 0));
+  battle.choice = "fight";
   e = new Enemy(210, 210);
 }
 
@@ -46,6 +47,39 @@ public void keyPressed () {
   }
 
   if (state == "battle") {
+    if (!battle.choice.equals("none") && key == 'b') {
+      battle.choice = "none";
+    }
+    // Main battle screen
+    if (battle.choice.equals("none") {
+      if (key == '1') {
+        battle.choice = "fight";
+      }
+      if (key == '2') {
+        battle.choice = "bag";
+      }
+      if (key == '3') {
+        battle.choice = "pokemon";
+      }
+      if (key == '4') {
+        battle.choice = "run";
+      }
+    }
+    // Fight screen
+    if (battle.choice.equals("fight")) {
+      if (key == '1') {
+        battle.choice = "fight";
+      }
+      if (key == '2') {
+        battle.choice = "bag";
+      }
+      if (key == '3') {
+        battle.choice = "pokemon";
+      }
+      if (key == '4') {
+        battle.choice = "run";
+      }
+    }
     if (key == 'l') {
       battle.yourPoke.hp--;
     }

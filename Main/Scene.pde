@@ -20,6 +20,7 @@ public class Battle extends Scene {
   public Pokemon yourPoke, enemyPoke;
   public boolean isYourTurn = true, deathScreen = false, winScreen = false;
   public int maxHP, maxEHP;
+  public String choice = "none";
 
   public Battle (Player p, Enemy e) {
     player = p;
@@ -44,7 +45,12 @@ public class Battle extends Scene {
       text("YOU WON :D", width / 2, height / 2, 300);
     } else {
       top();
-      bottom();
+      if (choice == "fight") {
+        moves();
+      } else {
+        bottom();
+      }
+      // Sprites
       imageMode(CENTER);
       image(enemyPoke.front, width / 4 * 3, 150, 200, 200);
       image(yourPoke.back, width / 4, 290, 200, 200);
@@ -52,11 +58,14 @@ public class Battle extends Scene {
   }
 
   public void bottom () {
+    // Base rectangle
     fill(0, 0, 0);
     rect(0, 390, width, 110);
+    // White rectangles
     fill(255, 255, 255);
     rect(7, 400, width / 2 - 10, 90, 10);
     rect(width / 2 + 7, 400, width / 2 - 15, 90, 10);
+    // Choices
     fill(0, 0, 0);
     textSize(27);
     textAlign(LEFT);
@@ -64,18 +73,22 @@ public class Battle extends Scene {
     text("BAG", width - 75, 430);
     text("POKEMON", width / 2 + 20, 470);
     text("RUN", width - 75, 470);
+    // Flavor text
     text("What will", 20, 430);
     text(yourPoke.name + " do?", 20, 470);
   }
 
   public void top () {
+    // Base rectangles
     fill(0, 0, 0);
     rect(10, 30, 200, 50, 10);
     rect(width / 2 + 40, 310, 200, 70, 10);
+    // Names
     fill(255, 255, 255);
     textAlign(LEFT);
     text(yourPoke.name, 295, 340);
     text(enemyPoke.name, 15, 60);
+    // Health text
     textSize(20);
     text("" + yourPoke.hp + "/" + maxHP, 295, 375);
     // Health bar base
@@ -85,6 +98,17 @@ public class Battle extends Scene {
     fill(0, 255, 0);
     rect(15, 65, enemyPoke.hp * (190.0 / maxEHP), 10, 90);
     rect(width / 2 + 45, 345, yourPoke.hp * (190.0 / maxHP), 10, 90);
+  }
+
+  public void moves () {
+    // Base rectangle
+    fill(0, 0, 0);
+    rect(0, 390, width, 110);
+    // White rectangles
+    fill(255, 255, 255);
+    rect(7, 400, width - 14, 90, 10);
+    //rect(width / 2 + 70, 400, 100, 90, 10);
+    textSize(27);
   }
 
   public void update () {
