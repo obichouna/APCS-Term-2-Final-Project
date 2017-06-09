@@ -30,6 +30,9 @@ public class Battle extends Scene {
     maxHP = yourPoke.maxHP;
     maxEHP = enemyPoke.maxHP;
     System.out.println(yourPoke.hp * (190.0 / maxHP));
+    if (enemyPoke.spd >= yourPoke.spd){
+       isYourTurn = false; 
+    }
   }
 
   public void draw () {
@@ -123,6 +126,9 @@ public class Battle extends Scene {
   }
 
   public void yourTurn () {
+    if (choice.equals("fight")){
+      
+    }
   }
 
   public void enemyTurn () {

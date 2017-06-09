@@ -66,9 +66,9 @@ public void keyPressed () {
       }
     }
     // Fight screen
-    if (battle.choice.equals("fight")) {
+    if (battle.choice.equals("fight") && battle.yourTurn) {
       if (key == '1') {
-        battle.choice = "fight";
+        battle.moveUsed = battle.yourPoke.moves.get(0);
       }
       if (key == '2') {
         battle.choice = "bag";
