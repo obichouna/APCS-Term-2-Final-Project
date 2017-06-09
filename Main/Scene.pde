@@ -108,7 +108,12 @@ public class Battle extends Scene {
     fill(255, 255, 255);
     rect(7, 400, width - 14, 90, 10);
     //rect(width / 2 + 70, 400, 100, 90, 10);
+    fill(0, 0, 0);
     textSize(27);
+    text(yourPoke.moves.get(0).name, 15, 430);
+    text(yourPoke.moves.get(1).name, 15, 430);
+    text(yourPoke.moves.get(2).name, 15, 430);
+    text(yourPoke.moves.get(3).name, 15, 430);
   }
 
   public void update () {
