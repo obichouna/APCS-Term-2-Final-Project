@@ -134,12 +134,12 @@ public class Battle extends Scene {
 
   public void pokemon () {
     int[][] coords = { 
-      {width / 4, 80}, 
-      {3 * width / 4, 80}, 
-      {width / 4, height / 2}, 
-      {3 * width / 4, height / 2}, 
-      {width / 4, 420}, 
-      {3 * width / 4, 420}, 
+      {width / 4, 60}, 
+      {3 * width / 4, 60}, 
+      {width / 4, 190}, 
+      {3 * width / 4, 190}, 
+      {width / 4, 320}, 
+      {3 * width / 4, 320}, 
     };
     int count = 0;
     while (count < player.party.size()) {
@@ -153,36 +153,39 @@ public class Battle extends Scene {
   }
 
   private void pokemonHelper (int x, int y, Pokemon poke, boolean filled) {
-    fill(0, 0, 0);
+    textAlign(LEFT);
     rectMode(CENTER);
-    rect(x, y, 210, 130, 10);
+    fill(0, 0, 0);
+    rect(x, y, 210, 110, 10);
     if (filled) {
       imageMode(CENTER);
-      image(poke.front, x - 63, y - 20, 75, 75);
+      image(poke.front, x - 63, y - 15, 65, 65);
       fill(255, 255, 255);
       textSize(25);
       text(poke.name, x - 20, y - 10);
       textSize(20);
-      text("" + poke.hp + "/" + poke.maxHP, x - 100, y + 57);
-      rect(x, y + 30, 200, 10, 90);
+      text("" + poke.hp + "/" + poke.maxHP, x - 100, y + 50);
+      rect(x, y + 25, 200, 10, 90);
       fill(0, 255, 0);
-      rect(x, y + 30, poke.hp * (200.0 / poke.maxHP), 10, 90);
+      rect(x, y + 25, poke.hp * (200.0 / poke.maxHP), 10, 90);
       //rect(x + 5, y + 10, 50, 50, 10);
     }
+    textScreen ("Choose a Pokemon");
   }
 
   public void textScreen (String str) {
+    rectMode(CORNER);
+    fill(0, 0, 0);
+    rect(0, 390, width, 110);
+    fill(255, 255, 255);
+    rect(7, 400, width - 14, 90, 10);
+    fill(0, 0, 0);
     textAlign(CENTER);
     textSize(30);
     text(str, width /2, 455);
   }
 
   public void run () {
-    fill(0, 0, 0);
-    rect(0, 390, width, 110);
-    fill(255, 255, 255);
-    rect(7, 400, width - 14, 90, 10);
-    fill(0, 0, 0);
     if (isTrainer) {
       textScreen("Can't run from a trainer battle");
     } else {

@@ -10,7 +10,7 @@ public void setup () {
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
   battle = new Battle(player, new Enemy(0, 0), false);
-  battle.choice = "none";
+  battle.choice = "pokemon";
   e = new Enemy(210, 210);
 }
 
