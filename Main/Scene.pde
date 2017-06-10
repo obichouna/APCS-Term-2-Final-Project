@@ -18,18 +18,19 @@ public class Battle extends Scene {
 
   public Enemy enemy;
   public Pokemon yourPoke, enemyPoke;
-  public boolean isYourTurn = true, deathScreen = false, winScreen = false;
+  public boolean isTrainer, isYourTurn = true, deathScreen = false, winScreen = false;
   public int maxHP, maxEHP;
   public String choice = "none";
+  private int delay = 0;
 
-  public Battle (Player p, Enemy e) {
+  public Battle (Player p, Enemy e, boolean bool) {
+    isTrainer = bool;
     player = p;
     enemy = e;
     yourPoke = player.party.get(0);
     enemyPoke = enemy.party.pop();
     maxHP = yourPoke.maxHP;
     maxEHP = enemyPoke.maxHP;
-    System.out.println(yourPoke.hp * (190.0 / maxHP));
   }
 
   public void draw () {
@@ -47,13 +48,25 @@ public class Battle extends Scene {
       top();
       if (choice == "fight") {
         moves();
+      } else if (choice == "run") {
+        run();
+        if (delay == 50) {
+          if (isTrainer) {
+            choice = "none";
+          } else {
+            state = "map";
+          }
+          delay = 0;
+        } else {
+          delay++;
+        }
       } else {
         bottom();
       }
       // Sprites
       imageMode(CENTER);
       image(enemyPoke.front, width / 4 * 3, 150, 200, 200);
-      image(yourPoke.back, width / 4, 290, 200, 200);
+      image(yourPoke.back, width / 4, 297, 240, 240);
     }
   }
 
@@ -86,6 +99,7 @@ public class Battle extends Scene {
     // Names
     fill(255, 255, 255);
     textAlign(LEFT);
+    textSize(27);
     text(yourPoke.name, 295, 340);
     text(enemyPoke.name, 15, 60);
     // Health text
@@ -109,12 +123,48 @@ public class Battle extends Scene {
     rect(7, 400, width - 14, 90, 10);
     //rect(width / 2 + 70, 400, 100, 90, 10);
     fill(0, 0, 0);
+    textAlign(CENTER);
     textSize(27);
-    text(yourPoke.moves.get(0).name, 15, 430);
-    text(yourPoke.moves.get(1).name, 15, 430);
-    text(yourPoke.moves.get(2).name, 15, 430);
-    text(yourPoke.moves.get(3).name, 15, 430);
+    text(yourPoke.moves.get(0).name.replace("_", " "), width / 4, 430);
+    text(yourPoke.moves.get(1).name.replace("_", " "), 3 * width / 4, 430);
+    text(yourPoke.moves.get(2).name.replace("_", " "), width / 4, 480);
+    text(yourPoke.moves.get(3).name.replace("_", " "), 3 * width / 4, 480);
   }
+
+  public void textScreen (String str) {
+    textAlign(CENTER);
+    textSize(30);
+    text(str, width /2, 455);
+  }
+
+  public void run () {
+    fill(0, 0, 0);
+    rect(0, 390, width, 110);
+    fill(255, 255, 255);
+    rect(7, 400, width - 14, 90, 10);
+    fill(0, 0, 0);
+    if (isTrainer) {
+      textScreen("Can't run from a trainer battle");
+    } else {
+      textScreen("Successfully ran away");
+    }
+  }
+
+  /*
+  public void run () {
+   fill(0, 0, 0);
+   if (isTrainer) {
+   textScreen("Can't run away from a battle");
+   delay(1000);
+   } else {
+   textScreen("Successfully ran away");
+   delay(1000);
+   state = "map";
+   }
+   choice = "none";
+   }
+   
+   */
 
   public void update () {
     if ((player.party.size() == 1) && yourPoke.hp == 0) {

@@ -40,7 +40,7 @@ public class Enemy extends Entity {
   public void fight (Player p) {
     float d = dist(xCor, yCor, p.xCor, p.yCor);
     if (d <= 15) {
-       battle = new Battle(p, this);
+       battle = new Battle(p, this, true);
        state = "battle";
     }
   }

@@ -9,8 +9,8 @@ public void setup () {
   size(500, 500);
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
-  battle = new Battle(player, new Enemy(0, 0));
-  battle.choice = "fight";
+  battle = new Battle(player, new Enemy(0, 0), false);
+  //battle.choice = "fight";
   e = new Enemy(210, 210);
 }
 
@@ -103,7 +103,7 @@ public void walk (float deltaX, float deltaY) {
 public void encounter () {
   int rand = floor(random(40));
   if (rand == 13) {
-    battle = new Battle(player, new Enemy(0, 0));
+    battle = new Battle(player, new Enemy(0, 0), false);
     state = "battle";
   }
 }
