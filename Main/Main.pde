@@ -1,6 +1,6 @@
 Player player;
 float speed = 15;
-String state = "battle";
+String state = "map";
 Battle battle;
 Enemy e;
 boolean showEnemy = true;
@@ -9,8 +9,8 @@ public void setup () {
   size(500, 500);
   background(0, 0, 0);
   player = new Player(width / 2, height / 2);
-  battle = new Battle(player, new Enemy(0, 0), false);
-  battle.choice = "pokemon";
+  //battle = new Battle(player, new Enemy(0, 0), false);
+  //battle.choice = "pokemon";
   e = new Enemy(210, 210);
 }
 
@@ -66,7 +66,7 @@ public void keyPressed () {
       }
     }
     // Fight screen
-    if (battle.choice.equals("fight") && battle.isYourTurn) {
+    if (battle.choice.equals("fight") && battle.isYourTurn && battle.delay > 40) {
       if (key == '1') {
         battle.moveUsed = battle.yourPoke.moves.get(0);
         battle.yourTurn();
@@ -85,7 +85,7 @@ public void keyPressed () {
       }
     }
     // Pokemon choice screen
-    if (battle.choice.equals("pokemon") && battle.delay > 50) {
+    if (battle.choice.equals("pokemon") && battle.delay > 40) {
       if (key == '1') {
         battle.switchOut(1);
       }
