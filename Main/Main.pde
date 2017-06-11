@@ -56,7 +56,7 @@ public void keyPressed () {
         battle.choice = "fight";
       }
       if (key == '2') {
-        //battle.choice = "bag";
+        battle.choice = "bag";
       }
       if (key == '3') {
         battle.choice = "pokemon";
@@ -84,25 +84,42 @@ public void keyPressed () {
         battle.yourTurn();
       }
     }
+    //bag screen
+    /*
+      if (battle.choice.equals("bag") && battle.delay > 40){
+        if (key == '1') {
+          player.party.add(battle.enemyPoke);
+          battle = null;
+          state = "map"; 
+        }
+      }
+     */
+    
     // Pokemon choice screen
     if (battle.choice.equals("pokemon") && battle.delay > 40) {
       if (key == '1') {
         battle.switchOut(1);
+        battle.enemyTurn();
       }
       if (key == '2') {
         battle.switchOut(2);
+        battle.enemyTurn();
       }
       if (key == '3') {
         battle.switchOut(3);
+        battle.enemyTurn();
       }
       if (key == '4') {
         battle.switchOut(4);
+        battle.enemyTurn();
       }
       if (key == '5') {
         battle.switchOut(5);
+        battle.enemyTurn();
       }
       if (key == '6') {
         battle.switchOut(6);
+        battle.enemyTurn();
       }
     }
     
