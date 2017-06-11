@@ -300,8 +300,9 @@ public class Battle extends Scene {
           multiplier = 0.5;
         }
         //enemyPoke.hp = enemyPoke.hp - 10;
-        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier) / 10);
+        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier) / 3);
         isYourTurn = false;
+        enemyTurn();
       } else {
         Types moveT = new Types(moveUsed.type);
         float multiplier = 1;
@@ -311,12 +312,39 @@ public class Battle extends Scene {
           multiplier = 0.5;
         }
         //enemyPoke.hp = enemyPoke.hp - 10;
-        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier) / 10);
+        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier) / 3);
         isYourTurn = false;
+        enemyTurn();
       }
     }
   }
 
   public void enemyTurn () {
+    Random r = new Random();
+    Move enemyMove = enemyPoke.moves.get(r.nextInt(4));
+    //Move enemyMove = enemyPoke.moves.get(0);
+    if (enemyMove.phys) {
+        Types moveT = new Types(enemyMove.type);
+        float multiplier = 1;
+        if (moveT.strength.indexOf(yourPoke.type) > 0) {
+          multiplier = 2;
+        } else if (moveT.weakness.indexOf(yourPoke.type) > 0) {
+          multiplier = 0.5;
+        }
+        //enemyPoke.hp = enemyPoke.hp - 10;
+        yourPoke.hp = yourPoke.hp -(int)(((((((2 * enemyPoke.lvl) / 5) * enemyPoke.att * enemyMove.dmg)/ yourPoke.def)/50) * multiplier) / 3);
+        isYourTurn = true;
+      } else {
+        Types moveT = new Types(enemyMove.type);
+        float multiplier = 1;
+        if (moveT.strength.indexOf(yourPoke.type) > 0) {
+          multiplier = 2;
+        } else if (moveT.weakness.indexOf(yourPoke.type) > 0) {
+          multiplier = 0.5;
+        }
+        //enemyPoke.hp = enemyPoke.hp - 10;
+        yourPoke.hp = yourPoke.hp -(int)(((((((2 * enemyPoke.lvl) / 5) * enemyPoke.sAtt * enemyMove.dmg)/ yourPoke.sDef)/50) * multiplier) / 3);
+        isYourTurn = true;
+      }
   }
 }
