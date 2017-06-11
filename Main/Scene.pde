@@ -1,4 +1,4 @@
-public abstract class Scene {
+public abstract class Scene { //<>// //<>// //<>// //<>// //<>//
 
   public Player player;
 
@@ -14,38 +14,58 @@ public class Map extends Scene {
   }
 }
 
-public enum Type {
-  ELECTRIC, FIRE, WATER, GRASS, PSYCHIC, ROCK, ICE;
-  //private int multiplier;
-  private Type[] strength;
-  private Type[] weakness;
+public class Types {
 
-  private Type() {
-    //multiplier = 1;
-    switch (Type) {
-    case ELECTRIC:
-      strength = {WATER};
-      weakness = {ROCK, GRASS};
-    case FIRE:
-      strength = {GRASS, ICE};
-      weakness = {WATER, ROCK};
-    case WATER:
-      strength = {FIRE, ROCK};
-      weakness = {ICE, GRASS, ELECTRIC};
-    case GRASS:
-      strength = {ROCK, WATER};
-      weakness = {FIRE, ICE};
-    case PSYCHIC:
-      strength = {};
-      weakness = {};
-    case ROCK:
-      strength = {FIRE, ELECTRIC};
-      weakness = {WATER, GRASS, ICE};
-    case ICE:
-      strength = {GRASS, ROCK};
-      weakness = {FIRE};
+  public ArrayList<String> strength = new ArrayList<String>();
+  public ArrayList<String> weakness = new ArrayList<String>();
+  public String name;
+
+  public Types(String x) {
+    name = x;
+    switch(x) {
+    case "ELECTRIC":
+      t.strength.add("WATER");
+      t.weakness.add("GRASS");
+      t.weakness.add("ROCK");
+      break;
+    case "FIRE":
+      t.strength.add("GRASS");
+      t.strength.add("ICE");
+      t.weakness.add("WATER");
+      t.weakness.add("ROCK");
+      break;
+    case "WATER":
+      t.strength.add("FIRE");
+      t.strength.add("ROCK");
+      t.weakness.add("ICE");
+      weakness.add("GRASS");
+      weakness.add("ELECTRIC");
+      break;
+    case "GRASS":
+      strength.add("ROCK");
+      strength.add("WATER");
+      weakness.add("FIRE");
+      weakness.add("ICE");
+      break;
+    case "PSYCHIC":
+      break;
+    case "ROCK":
+      strength.add("FIRE");
+      strength.add("ELECTRIC");
+      weakness.add("WATER");
+      weakness.add("GRASS");
+      weakness.add("ICE");
+      break;
+    case "ICE":
+      strength.add("GRASS");
+      strength.add("ROCK");
+      weakness.add("FIRE");
+      break;
+    default: 
+      break;
     }
   }
+}
 
 
 public class Battle extends Scene {
@@ -69,6 +89,59 @@ public class Battle extends Scene {
       isYourTurn = false;
     }
   }
+
+  //public enum Types {
+  //ELECTRIC, FIRE, WATER, GRASS, PSYCHIC, ROCK, ICE;
+  //private int multiplier;
+  // public ArrayList<Types> strength;
+  // public ArrayList<Types> weakness;
+  //}
+  //public Type() {
+  //multiplier = 1;
+  //}
+  // public void calcType(Types t) {
+  //  switch(t) {
+  // case ELECTRIC:
+  //    t.strength.add(WATER);
+  //   t.weakness.add(GRASS);
+  //   t.weakness.add(ROCK);
+  //   break;
+  //  case FIRE:
+  //   t.strength.add(GRASS);
+  //   t.strength.add(ICE);
+  //   t.weakness.add(WATER);
+  //   t.weakness.add(ROCK);
+  //    break;
+  //  case WATER:
+  //   t.strength.add(FIRE);
+  //   t.strength.add(ROCK);
+  //   t.weakness.add(ICE);
+  //    weakness.add(GRASS);
+  //    weakness.add(ELECTRIC);
+  //    break;
+  //  case GRASS:
+  //   strength.add(ROCK);
+  //   strength.add(WATER);
+  //    weakness.add(FIRE);
+  //  weakness.add(ICE);
+  //   break;
+  //  case PSYCHIC:
+  //   break;
+  //  case ROCK:
+  //   strength.add(FIRE);
+  //    strength.add(ELECTRIC);
+  //   weakness.add(WATER);
+  //  weakness.add(GRASS);
+  //    weakness.add(ICE);
+  //    break;
+  //  case ICE:
+  //   strength.add(GRASS);
+  //   strength.add(ROCK);
+  //   weakness.add(FIRE);
+  //   break;
+  // }
+  //}
+
 
   public void draw () {
     update();
@@ -160,14 +233,26 @@ public class Battle extends Scene {
     }
   }
 
-
   public void yourTurn () {
     if (choice.equals("fight")) {
       if (moveUsed.phys) {
-        Type moveT = Type.valueOf(moveUsed.type);
-        int multiplier = 1;
-        if (enemy.type.binarySearch(
-        enemyPoke.hp = enemyPoke.hp - ((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)
+        Types moveT = new Types(moveUsed.type);
+        float multiplier = 1;
+        if (moveT.strength.indexOf(enemyPoke.type) > 0) {
+          multiplier = 2;
+        } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
+          multiplier = 0.5;
+        }
+        enemyPoke.hp = enemyPoke.hp -(int)((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier);
+      } else {
+        Types moveT = new Types(moveUsed.type);
+        float multiplier = 1;
+        if (moveT.strength.indexOf(enemyPoke.type) > 0) {
+          multiplier = 2;
+        } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
+          multiplier = 0.5;
+        }
+        enemyPoke.hp = enemyPoke.hp -(int)((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier);
       }
     }
   }
