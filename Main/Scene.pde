@@ -67,7 +67,6 @@ public class Types {
   }
 }
 
-
 public class Battle extends Scene {
 
   public Enemy enemy;
@@ -108,7 +107,18 @@ public class Battle extends Scene {
         moves();
         delay++;
       } else if (choice == "run") {
-        run();
+        if (isTrainer) {
+          event("Cant run from a trainer battle", "none");
+        } else {
+          event("Successfully got away", "map");
+        }
+        //run();
+      } else if (choice == "justAttacked") {
+        if (isYourTurn) {
+          event(enemyPoke.name + " used " + moveUsed.name, "none");
+        } else {
+          event(yourPoke.name + " used " + moveUsed.name, "none");
+        }
       } else {
         bottom();
       }
@@ -245,39 +255,15 @@ public class Battle extends Scene {
     text(str, width /2, 455);
   }
 
-  public void run () {
-    if (isTrainer) {
-      textScreen("Can't run from a trainer battle");
-    } else {
-      textScreen("Successfully got away");
-    }
+  public void event (String str, String nextState) {
+    textScreen(str);
     if (delay == 50) {
-      if (isTrainer) {
-        choice = "none";
-      } else {
-        state = "map";
-      }
+      choice = nextState;
       delay = 0;
     } else {
       delay++;
     }
   }
-
-  /*
-  public void run () {
-   fill(0, 0, 0);
-   if (isTrainer) {
-   textScreen("Can't run away from a battle");
-   delay(1000);
-   } else {
-   textScreen("Successfully ran away");
-   delay(1000);
-   state = "map";
-   }
-   choice = "none";
-   }
-   
-   */
 
   public void update () {
     if ((player.party.size() == 1) && yourPoke.hp == 0) {
@@ -291,6 +277,7 @@ public class Battle extends Scene {
   }
 
   public void yourTurn () {
+    delay = 0;
     if (choice.equals("fight")) {
       if (moveUsed.phys) {
         Types moveT = new Types(moveUsed.type);
@@ -315,6 +302,7 @@ public class Battle extends Scene {
         enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier) / 10);
         isYourTurn = false;
       }
+      choice = "justAttacked";
     }
   }
 
