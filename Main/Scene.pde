@@ -266,46 +266,58 @@ public class Battle extends Scene {
   }
 
   public void update () {
-    if ((player.party.size() == 1) && yourPoke.hp == 0) {
+    if ((player.party.size() == 1) && yourPoke.hp <= 0) {
       deathScreen = true;
     }
-    if ((enemy.party.size() == 0) && (enemyPoke.hp == 0)) {
+    if ((enemy.party.size() == 0) && (enemyPoke.hp <= 0)) {
       e = null;
       showEnemy = false;
       winScreen = true;
+    }
+    if (!isYourTurn && choice == "none") {
+     enemyTurn(); 
     }
   }
 
   public void yourTurn () {
     delay = 0;
+    Random r = new Random();
+    Types moveT = new Types(moveUsed.type);
+    float multiplier = 1;
+    if (moveT.strength.indexOf(enemyPoke.type) > 0) {
+      multiplier = 2;
+    } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
+      multiplier = 0.5;
+    }
     if (choice.equals("fight")) {
       if (moveUsed.phys) {
-        Types moveT = new Types(moveUsed.type);
-        float multiplier = 1;
-        if (moveT.strength.indexOf(enemyPoke.type) > 0) {
-          multiplier = 2;
-        } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
-          multiplier = 0.5;
-        }
-        //enemyPoke.hp = enemyPoke.hp - 10;
-        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier) / 10);
-        isYourTurn = false;
+        enemyPoke.hp = max(0, enemyPoke.hp -(int)((((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier) / 3) + r.nextInt(4)));
       } else {
-        Types moveT = new Types(moveUsed.type);
-        float multiplier = 1;
-        if (moveT.strength.indexOf(enemyPoke.type) > 0) {
-          multiplier = 2;
-        } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
-          multiplier = 0.5;
-        }
-        //enemyPoke.hp = enemyPoke.hp - 10;
-        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier) / 10);
-        isYourTurn = false;
+        enemyPoke.hp = max(0, enemyPoke.hp -(int)((((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier) / 3) + r.nextInt(4)));
       }
+      isYourTurn = false;
       choice = "justAttacked";
     }
   }
 
   public void enemyTurn () {
+    Random r = new Random();
+    moveUsed = enemyPoke.moves.get(r.nextInt(4));
+    Types moveT = new Types(moveUsed.type);
+    float multiplier = 1;
+    if (moveT.strength.indexOf(yourPoke.type) > 0) {
+      multiplier = 2;
+    } else if (moveT.weakness.indexOf(yourPoke.type) > 0) {
+      multiplier = 0.5;
+    }
+    if (moveUsed.phys) {
+
+      yourPoke.hp = max(0, yourPoke.hp -(int)((((((((2 * enemyPoke.lvl) / 5) * enemyPoke.att * moveUsed.dmg)/ yourPoke.def)/50) * multiplier) / 3) + r.nextInt(4)));
+    } else {
+      yourPoke.hp = max(0, yourPoke.hp -(int)((((((((2 * enemyPoke.lvl) / 5) * enemyPoke.sAtt * moveUsed.dmg)/ yourPoke.sDef)/50) * multiplier) / 3) + r.nextInt(4)));
+    }
+    isYourTurn = true;
+    choice = "justAttacked";
   }
+  
 }
