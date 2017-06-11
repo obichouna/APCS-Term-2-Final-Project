@@ -111,10 +111,6 @@ public class Battle extends Scene {
       } else {
         bottom();
       }
-      // Sprites
-      imageMode(CENTER);
-      image(enemyPoke.front, width / 4 * 3, 150, 200, 200);
-      image(yourPoke.back, width / 4, 297, 240, 240);
     }
   }
 
@@ -141,6 +137,10 @@ public class Battle extends Scene {
   }
 
   public void top () {
+    // Sprites
+    imageMode(CENTER);
+    image(enemyPoke.front, width / 4 * 3, 150, 200, 200);
+    image(yourPoke.back, width / 4, 297, 240, 240);
     rectMode(CORNER);
     // Base rectangles
     fill(0, 0, 0);
@@ -215,8 +215,9 @@ public class Battle extends Scene {
       textSize(20);
       text("" + poke.hp + "/" + poke.maxHP, x - 100, y + 50);
       rect(x, y + 25, 200, 10, 90);
+      rectMode(CORNER);
       fill(0, 255, 0);
-      rect(x, y + 25, poke.hp * (200.0 / poke.maxHP), 10, 90);
+      rect(x - 100, y + 20, poke.hp * (200.0 / poke.maxHP), 10, 90);
       //rect(x + 5, y + 10, 50, 50, 10);
     }
     textScreen ("Choose a Pokemon");
@@ -224,7 +225,7 @@ public class Battle extends Scene {
 
   public void switchOut (int num) {
     if (num - 1 < player.party.size()) {
-      Pokemon newPoke = player.party.get(num -1);
+      Pokemon newPoke = player.party.get(num - 1);
       yourPoke = newPoke;
       choice = "none";
       delay = 0;

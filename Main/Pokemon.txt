@@ -1,3 +1,5 @@
-Pikachu Electric 50 110 55 40 50 50 90 0 1 2 3 Pikachu.png Pikachu_back.png
-Charizard Fire 60 200 78 84 68 109 85 0 1 2 3 Charizard.png Charizard_back.png
+Pikachu Electric 50 35 55 40 50 50 90 0 1 2 3 Pikachu.png Pikachu_back.png
+Charizard Fire 50 78 84 78 109 85 100 0 1 2 3 Charizard.png Charizard_back.png
+Blastoise Water 50 79 83 100 85 105 78 0 1 2 3 Blastoise.png Blastoise_back.png
+Venusaur Grass 50 80 82 83 100 100 80 0 1 2 3 Venusaur.png Venusaur_back.png
 
