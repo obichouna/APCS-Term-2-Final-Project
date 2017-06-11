@@ -106,6 +106,7 @@ public class Battle extends Scene {
       top();
       if (choice == "fight") {
         moves();
+        delay++;
       } else if (choice == "run") {
         run();
       } else {
