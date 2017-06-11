@@ -56,7 +56,7 @@ public void keyPressed () {
         battle.choice = "fight";
       }
       if (key == '2') {
-        battle.choice = "bag";
+        //battle.choice = "bag";
       }
       if (key == '3') {
         battle.choice = "pokemon";
