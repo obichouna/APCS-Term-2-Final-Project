@@ -1,4 +1,4 @@
-public abstract class Scene { //<>// //<>// //<>// //<>// //<>//
+public abstract class Scene { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
   public Player player;
 
@@ -24,20 +24,20 @@ public class Types {
     name = x;
     switch(x) {
     case "ELECTRIC":
-      t.strength.add("WATER");
-      t.weakness.add("GRASS");
-      t.weakness.add("ROCK");
+      strength.add("WATER");
+      weakness.add("GRASS");
+      weakness.add("ROCK");
       break;
     case "FIRE":
-      t.strength.add("GRASS");
-      t.strength.add("ICE");
-      t.weakness.add("WATER");
-      t.weakness.add("ROCK");
+      strength.add("GRASS");
+      strength.add("ICE");
+      weakness.add("WATER");
+      weakness.add("ROCK");
       break;
     case "WATER":
-      t.strength.add("FIRE");
-      t.strength.add("ROCK");
-      t.weakness.add("ICE");
+      strength.add("FIRE");
+      strength.add("ROCK");
+      weakness.add("ICE");
       weakness.add("GRASS");
       weakness.add("ELECTRIC");
       break;
@@ -72,76 +72,21 @@ public class Battle extends Scene {
 
   public Enemy enemy;
   public Pokemon yourPoke, enemyPoke;
-  public boolean isYourTurn = true, deathScreen = false, winScreen = false;
-  public int maxHP, maxEHP;
+  public boolean isTrainer, isYourTurn = true, deathScreen = false, winScreen = false;
   public String choice = "none";
   public Move moveUsed;
+  private int delay = 0;
 
-  public Battle (Player p, Enemy e) {
+  public Battle (Player p, Enemy e, boolean bool) {
+    isTrainer = bool;
     player = p;
     enemy = e;
     yourPoke = player.party.get(0);
     enemyPoke = enemy.party.pop();
-    maxHP = yourPoke.maxHP;
-    maxEHP = enemyPoke.maxHP;
-    System.out.println(yourPoke.hp * (190.0 / maxHP));
     if (enemyPoke.spd >= yourPoke.spd) {
       isYourTurn = false;
     }
   }
-
-  //public enum Types {
-  //ELECTRIC, FIRE, WATER, GRASS, PSYCHIC, ROCK, ICE;
-  //private int multiplier;
-  // public ArrayList<Types> strength;
-  // public ArrayList<Types> weakness;
-  //}
-  //public Type() {
-  //multiplier = 1;
-  //}
-  // public void calcType(Types t) {
-  //  switch(t) {
-  // case ELECTRIC:
-  //    t.strength.add(WATER);
-  //   t.weakness.add(GRASS);
-  //   t.weakness.add(ROCK);
-  //   break;
-  //  case FIRE:
-  //   t.strength.add(GRASS);
-  //   t.strength.add(ICE);
-  //   t.weakness.add(WATER);
-  //   t.weakness.add(ROCK);
-  //    break;
-  //  case WATER:
-  //   t.strength.add(FIRE);
-  //   t.strength.add(ROCK);
-  //   t.weakness.add(ICE);
-  //    weakness.add(GRASS);
-  //    weakness.add(ELECTRIC);
-  //    break;
-  //  case GRASS:
-  //   strength.add(ROCK);
-  //   strength.add(WATER);
-  //    weakness.add(FIRE);
-  //  weakness.add(ICE);
-  //   break;
-  //  case PSYCHIC:
-  //   break;
-  //  case ROCK:
-  //   strength.add(FIRE);
-  //    strength.add(ELECTRIC);
-  //   weakness.add(WATER);
-  //  weakness.add(GRASS);
-  //    weakness.add(ICE);
-  //    break;
-  //  case ICE:
-  //   strength.add(GRASS);
-  //   strength.add(ROCK);
-  //   weakness.add(FIRE);
-  //   break;
-  // }
-  //}
-
 
   public void draw () {
     update();
@@ -154,21 +99,27 @@ public class Battle extends Scene {
       fill(0, 0, 0);
       textAlign(CENTER);
       text("YOU WON :D", width / 2, height / 2, 300);
+    } else if (choice == "pokemon") {
+      pokemon();
+      delay++;
     } else {
       top();
       if (choice == "fight") {
         moves();
+      } else if (choice == "run") {
+        run();
       } else {
         bottom();
       }
       // Sprites
       imageMode(CENTER);
       image(enemyPoke.front, width / 4 * 3, 150, 200, 200);
-      image(yourPoke.back, width / 4, 290, 200, 200);
+      image(yourPoke.back, width / 4, 297, 240, 240);
     }
   }
 
   public void bottom () {
+    rectMode(CORNER);
     // Base rectangle
     fill(0, 0, 0);
     rect(0, 390, width, 110);
@@ -190,6 +141,7 @@ public class Battle extends Scene {
   }
 
   public void top () {
+    rectMode(CORNER);
     // Base rectangles
     fill(0, 0, 0);
     rect(10, 30, 200, 50, 10);
@@ -197,18 +149,19 @@ public class Battle extends Scene {
     // Names
     fill(255, 255, 255);
     textAlign(LEFT);
+    textSize(27);
     text(yourPoke.name, 295, 340);
     text(enemyPoke.name, 15, 60);
     // Health text
     textSize(20);
-    text("" + yourPoke.hp + "/" + maxHP, 295, 375);
+    text("" + yourPoke.hp + "/" + yourPoke.maxHP, 295, 375);
     // Health bar base
     rect(15, 65, 190, 10, 90);
     rect(width / 2 + 45, 345, 190, 10, 90);
     // Health bar top
     fill(0, 255, 0);
-    rect(15, 65, enemyPoke.hp * (190.0 / maxEHP), 10, 90);
-    rect(width / 2 + 45, 345, yourPoke.hp * (190.0 / maxHP), 10, 90);
+    rect(15, 65, enemyPoke.hp * (190.0 / enemyPoke.maxHP), 10, 90);
+    rect(width / 2 + 45, 345, yourPoke.hp * (190.0 / yourPoke.maxHP), 10, 90);
   }
 
   public void moves () {
@@ -219,8 +172,110 @@ public class Battle extends Scene {
     fill(255, 255, 255);
     rect(7, 400, width - 14, 90, 10);
     //rect(width / 2 + 70, 400, 100, 90, 10);
+    fill(0, 0, 0);
+    textAlign(CENTER);
     textSize(27);
+    text(yourPoke.moves.get(0).name.replace("_", " "), width / 4, 430);
+    text(yourPoke.moves.get(1).name.replace("_", " "), 3 * width / 4, 430);
+    text(yourPoke.moves.get(2).name.replace("_", " "), width / 4, 480);
+    text(yourPoke.moves.get(3).name.replace("_", " "), 3 * width / 4, 480);
   }
+
+  public void pokemon () {
+    int[][] coords = { 
+      {width / 4, 60}, 
+      {3 * width / 4, 60}, 
+      {width / 4, 190}, 
+      {3 * width / 4, 190}, 
+      {width / 4, 320}, 
+      {3 * width / 4, 320}, 
+    };
+    int count = 0;
+    while (count < player.party.size()) {
+      pokemonHelper(coords[count][0], coords[count][1], player.party.get(count), true);
+      count++;
+    }
+    while (count < 6) {
+      pokemonHelper(coords[count][0], coords[count][1], null, false);
+      count++;
+    }
+  }
+
+  private void pokemonHelper (int x, int y, Pokemon poke, boolean filled) {
+    textAlign(LEFT);
+    rectMode(CENTER);
+    fill(0, 0, 0);
+    rect(x, y, 210, 110, 10);
+    if (filled) {
+      imageMode(CENTER);
+      image(poke.front, x - 63, y - 15, 65, 65);
+      fill(255, 255, 255);
+      textSize(25);
+      text(poke.name, x - 20, y - 10);
+      textSize(20);
+      text("" + poke.hp + "/" + poke.maxHP, x - 100, y + 50);
+      rect(x, y + 25, 200, 10, 90);
+      fill(0, 255, 0);
+      rect(x, y + 25, poke.hp * (200.0 / poke.maxHP), 10, 90);
+      //rect(x + 5, y + 10, 50, 50, 10);
+    }
+    textScreen ("Choose a Pokemon");
+  }
+
+  public void switchOut (int num) {
+    if (num - 1 < player.party.size()) {
+      Pokemon newPoke = player.party.get(num -1);
+      yourPoke = newPoke;
+      choice = "none";
+      delay = 0;
+    }
+  }
+
+  public void textScreen (String str) {
+    rectMode(CORNER);
+    fill(0, 0, 0);
+    rect(0, 390, width, 110);
+    fill(255, 255, 255);
+    rect(7, 400, width - 14, 90, 10);
+    fill(0, 0, 0);
+    textAlign(CENTER);
+    textSize(30);
+    text(str, width /2, 455);
+  }
+
+  public void run () {
+    if (isTrainer) {
+      textScreen("Can't run from a trainer battle");
+    } else {
+      textScreen("Successfully got away");
+    }
+    if (delay == 50) {
+      if (isTrainer) {
+        choice = "none";
+      } else {
+        state = "map";
+      }
+      delay = 0;
+    } else {
+      delay++;
+    }
+  }
+
+  /*
+  public void run () {
+   fill(0, 0, 0);
+   if (isTrainer) {
+   textScreen("Can't run away from a battle");
+   delay(1000);
+   } else {
+   textScreen("Successfully ran away");
+   delay(1000);
+   state = "map";
+   }
+   choice = "none";
+   }
+   
+   */
 
   public void update () {
     if ((player.party.size() == 1) && yourPoke.hp == 0) {
@@ -244,6 +299,7 @@ public class Battle extends Scene {
           multiplier = 0.5;
         }
         enemyPoke.hp = enemyPoke.hp -(int)((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier);
+        isYourTurn = false;
       } else {
         Types moveT = new Types(moveUsed.type);
         float multiplier = 1;
@@ -253,6 +309,7 @@ public class Battle extends Scene {
           multiplier = 0.5;
         }
         enemyPoke.hp = enemyPoke.hp -(int)((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier);
+        isYourTurn = false;
       }
     }
   }

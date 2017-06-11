@@ -1,2 +1,3 @@
-Pikachu ELECTRIC 50 110 55 40 50 50 90 0 1 2 3 Pikachu.png Pikachu_back.png
-Charizard FIRE 60 200 78 84 68 109 85 100 0 1 2 3 
+Pikachu Electric 50 110 55 40 50 50 90 0 1 2 3 Pikachu.png Pikachu_back.png
+Charizard Fire 60 200 78 84 68 109 85 0 1 2 3 Charizard.png Charizard_back.png
+

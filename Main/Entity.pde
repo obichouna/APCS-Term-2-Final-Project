@@ -18,10 +18,11 @@ public class Player extends Entity {
     yCor = y;
     sprite = loadImage("Player.png");
     party.add(new Pokemon(0));
+    party.add(new Pokemon(1));
   }
 
   public void draw () {
-    //imageMode(CENTER);
+    imageMode(CENTER);
     image(sprite, xCor, yCor, 25, 25);
     fill(0, 0, 255);
     //rect(xCor, yCor, 10, 10);
@@ -40,7 +41,7 @@ public class Enemy extends Entity {
   public void fight (Player p) {
     float d = dist(xCor, yCor, p.xCor, p.yCor);
     if (d <= 15) {
-       battle = new Battle(p, this);
+       battle = new Battle(p, this, true);
        state = "battle";
     }
   }
