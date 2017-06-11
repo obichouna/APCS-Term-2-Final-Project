@@ -14,6 +14,40 @@ public class Map extends Scene {
   }
 }
 
+public enum Type {
+  ELECTRIC, FIRE, WATER, GRASS, PSYCHIC, ROCK, ICE;
+  //private int multiplier;
+  private Type[] strength;
+  private Type[] weakness;
+
+  private Type() {
+    //multiplier = 1;
+    switch (Type) {
+    case ELECTRIC:
+      strength = {WATER};
+      weakness = {ROCK, GRASS};
+    case FIRE:
+      strength = {GRASS, ICE};
+      weakness = {WATER, ROCK};
+    case WATER:
+      strength = {FIRE, ROCK};
+      weakness = {ICE, GRASS, ELECTRIC};
+    case GRASS:
+      strength = {ROCK, WATER};
+      weakness = {FIRE, ICE};
+    case PSYCHIC:
+      strength = {};
+      weakness = {};
+    case ROCK:
+      strength = {FIRE, ELECTRIC};
+      weakness = {WATER, GRASS, ICE};
+    case ICE:
+      strength = {GRASS, ROCK};
+      weakness = {FIRE};
+    }
+  }
+
+
 public class Battle extends Scene {
 
   public Enemy enemy;
@@ -21,6 +55,7 @@ public class Battle extends Scene {
   public boolean isYourTurn = true, deathScreen = false, winScreen = false;
   public int maxHP, maxEHP;
   public String choice = "none";
+  public Move moveUsed;
 
   public Battle (Player p, Enemy e) {
     player = p;
@@ -30,8 +65,8 @@ public class Battle extends Scene {
     maxHP = yourPoke.maxHP;
     maxEHP = enemyPoke.maxHP;
     System.out.println(yourPoke.hp * (190.0 / maxHP));
-    if (enemyPoke.spd >= yourPoke.spd){
-       isYourTurn = false; 
+    if (enemyPoke.spd >= yourPoke.spd) {
+      isYourTurn = false;
     }
   }
 
@@ -125,9 +160,15 @@ public class Battle extends Scene {
     }
   }
 
+
   public void yourTurn () {
-    if (choice.equals("fight")){
-      
+    if (choice.equals("fight")) {
+      if (moveUsed.phys) {
+        Type moveT = Type.valueOf(moveUsed.type);
+        int multiplier = 1;
+        if (enemy.type.binarySearch(
+        enemyPoke.hp = enemyPoke.hp - ((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)
+      }
     }
   }
 

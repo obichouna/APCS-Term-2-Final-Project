@@ -66,18 +66,22 @@ public void keyPressed () {
       }
     }
     // Fight screen
-    if (battle.choice.equals("fight") && battle.yourTurn) {
+    if (battle.choice.equals("fight") && battle.isYourTurn) {
       if (key == '1') {
         battle.moveUsed = battle.yourPoke.moves.get(0);
+        battle.yourTurn();
       }
       if (key == '2') {
-        battle.choice = "bag";
+        battle.moveUsed = battle.yourPoke.moves.get(1);
+        battle.yourTurn();
       }
       if (key == '3') {
-        battle.choice = "pokemon";
+        battle.moveUsed = battle.yourPoke.moves.get(2);
+        battle.yourTurn();
       }
       if (key == '4') {
-        battle.choice = "run";
+        battle.moveUsed = battle.yourPoke.moves.get(3);
+        battle.yourTurn();
       }
     }
     if (key == 'l') {

@@ -1,6 +1,6 @@
-Flamethrower Fire burn 90 15 100 false
-Water_Gun Water null 40 25 100 false
-Bubble_Beam Water null 65 20 100 false
-Thunderbolt Electric para 90 15 100 false
-Rock_Throw Rock flinch 50 15 90 false
-Razor Leaf Grass crit 55 25 95 false
+Flamethrower FIRE burn 90 15 100 false
+Water_Gun WATER null 40 25 100 false
+Bubble_Beam WATER null 65 20 100 false
+Thunderbolt ELECTRIC para 90 15 100 false
+Rock_Throw ROCK flinch 50 15 90 false
+Razor Leaf GRASS crit 55 25 95 false
