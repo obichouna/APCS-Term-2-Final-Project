@@ -157,8 +157,9 @@ public class Battle extends Scene {
       textSize(20);
       text("" + poke.hp + "/" + poke.maxHP, x - 100, y + 50);
       rect(x, y + 25, 200, 10, 90);
+      rectMode(CORNER);
       fill(0, 255, 0);
-      rect(x, y + 25, poke.hp * (200.0 / poke.maxHP), 10, 90);
+      rect(x - 100, y + 20, poke.hp * (200.0 / poke.maxHP), 10, 90);
       //rect(x + 5, y + 10, 50, 50, 10);
     }
     textScreen ("Choose a Pokemon");
