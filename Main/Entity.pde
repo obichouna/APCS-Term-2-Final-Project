@@ -22,7 +22,7 @@ public class Player extends Entity {
   }
 
   public void draw () {
-    //imageMode(CENTER);
+    imageMode(CENTER);
     image(sprite, xCor, yCor, 25, 25);
     fill(0, 0, 255);
     //rect(xCor, yCor, 10, 10);

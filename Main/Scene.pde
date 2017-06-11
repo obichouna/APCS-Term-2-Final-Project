@@ -43,22 +43,13 @@ public class Battle extends Scene {
       text("YOU WON :D", width / 2, height / 2, 300);
     } else if (choice == "pokemon") {
       pokemon();
+      delay++;
     } else {
       top();
       if (choice == "fight") {
         moves();
       } else if (choice == "run") {
         run();
-        if (delay == 50) {
-          if (isTrainer) {
-            choice = "none";
-          } else {
-            state = "map";
-          }
-          delay = 0;
-        } else {
-          delay++;
-        }
       } else {
         bottom();
       }
@@ -173,6 +164,15 @@ public class Battle extends Scene {
     textScreen ("Choose a Pokemon");
   }
 
+  public void switchOut (int num) {
+    if (num - 1 < player.party.size()) {
+      Pokemon newPoke = player.party.get(num -1);
+      yourPoke = newPoke;
+      choice = "none";
+      delay = 0;
+    }
+  }
+
   public void textScreen (String str) {
     rectMode(CORNER);
     fill(0, 0, 0);
@@ -189,7 +189,17 @@ public class Battle extends Scene {
     if (isTrainer) {
       textScreen("Can't run from a trainer battle");
     } else {
-      textScreen("Successfully ran away");
+      textScreen("Successfully got away");
+    }
+    if (delay == 50) {
+      if (isTrainer) {
+        choice = "none";
+      } else {
+        state = "map";
+      }
+      delay = 0;
+    } else {
+      delay++;
     }
   }
 
