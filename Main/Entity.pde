@@ -19,6 +19,8 @@ public class Player extends Entity {
     sprite = loadImage("Player.png");
     party.add(new Pokemon(0));
     party.add(new Pokemon(1));
+    party.add(new Pokemon(2));
+    party.add(new Pokemon(3));
   }
 
   public void draw () {
