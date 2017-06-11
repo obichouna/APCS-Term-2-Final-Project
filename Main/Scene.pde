@@ -1,4 +1,4 @@
-public abstract class Scene { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+public abstract class Scene { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
   public Player player;
 
@@ -83,7 +83,7 @@ public class Battle extends Scene {
     enemy = e;
     yourPoke = player.party.get(0);
     enemyPoke = enemy.party.pop();
-    if (enemyPoke.spd >= yourPoke.spd) {
+    if (enemyPoke.spd > yourPoke.spd) {
       isYourTurn = false;
     }
   }
@@ -299,7 +299,8 @@ public class Battle extends Scene {
         } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
           multiplier = 0.5;
         }
-        enemyPoke.hp = enemyPoke.hp -(int)((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier);
+        //enemyPoke.hp = enemyPoke.hp - 10;
+        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.att * moveUsed.dmg)/ enemyPoke.def)/50) * multiplier) / 10);
         isYourTurn = false;
       } else {
         Types moveT = new Types(moveUsed.type);
@@ -309,7 +310,8 @@ public class Battle extends Scene {
         } else if (moveT.weakness.indexOf(enemyPoke.type) > 0) {
           multiplier = 0.5;
         }
-        enemyPoke.hp = enemyPoke.hp -(int)((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier);
+        //enemyPoke.hp = enemyPoke.hp - 10;
+        enemyPoke.hp = enemyPoke.hp -(int)(((((((2 * yourPoke.lvl) / 5) * yourPoke.sAtt * moveUsed.dmg)/ enemyPoke.sDef)/50) * multiplier) / 10);
         isYourTurn = false;
       }
     }
