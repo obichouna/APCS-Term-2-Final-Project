@@ -5,31 +5,28 @@ public class Battle extends Scene {
   public boolean isTrainer, isYourTurn = true, deathScreen = false;
   public String choice = "none", nextChoice;
   public Move moveUsed;
-  private int delay = 0;
+  private int delay = 0, pSize;
 
   public Battle (Player p, Enemy e, boolean bool) {
     isTrainer = bool;
     player = p;
     enemy = e;
     int count = 0;
+    pSize = player.party.size();
     while (player.party.get(count).hp == 0) {
       count++;
     }
     yourPoke = player.party.get(count);
     enemyPoke = enemy.party.pop();
     //if (enemyPoke.spd > yourPoke.spd) {
-      //isYourTurn = false;
+    //isYourTurn = false;
     //}
   }
 
   public void draw () {
     update();
     background(255, 255, 255);
-    if (deathScreen) {
-      fill(0, 0, 0);
-      textAlign(CENTER);
-      text("YOU DIED :(", width / 2, height / 2, 300);
-    } else if (choice == "pokemon") {
+    if (choice == "pokemon") {
       pokemon();
       delay++;
     } else {
@@ -43,6 +40,8 @@ public class Battle extends Scene {
         } else {
           event("The wild " + enemyPoke.name + " fainted", "map", true);
         }
+      } else if (choice == "lose") {
+        event("You blacked out", "map", true);
       } else if (choice == "cantRun") {
         event("Cant run from a trainer battle", "none", false);
       } else if (choice == "run") {
@@ -55,8 +54,7 @@ public class Battle extends Scene {
         }
       } else if (choice == "justSwitched") {
         event("Go " + yourPoke.name + "!", "none", false);
-      } 
-        else {
+      } else {
         bottom();
       }
     }
@@ -212,14 +210,14 @@ public class Battle extends Scene {
 
   public void update () {
     if (yourPoke.hp <= 0) {
-      if (player.party.size() == 1) {
-        deathScreen = true;
+      if (pSize == 1) {
+        choice = "lose";
       } else {
+        pSize--;
         choice = "pokemon";
       }
     }
     if ((enemy.party.size() == 0) && (enemyPoke.hp <= 0)) {
-      //e = null;
       showEnemy = false;
       choice = "win";
     }

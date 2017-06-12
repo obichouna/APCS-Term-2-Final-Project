@@ -62,7 +62,7 @@ public void keyPressed () {
     if ((battle.choice == "justAttacked" || battle.choice == "cantRun") && keyCode == ENTER) {
       battle.choice = battle.nextChoice;
     }
-    if ((battle.choice == "win" || battle.choice == "run") && keyCode == ENTER) {
+    if ((battle.choice == "win" || battle.choice == "run" || battle.choice == "lose") && keyCode == ENTER) {
       state = nextState;
     }
     if (!battle.choice.equals("none") && keyCode == BACKSPACE) {

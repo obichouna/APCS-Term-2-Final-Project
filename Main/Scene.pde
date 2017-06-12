@@ -29,7 +29,6 @@ public class Map extends Scene {
       }
     } else {
       d = new Door(225, 475, "map", 225, 75);
-      red = new Enemy(width / 2, height / 2);
     }
   }
 
@@ -59,7 +58,9 @@ public class Map extends Scene {
     }
     if (!isBoss) {
       pCenter.draw();
+      pCenter.heal(player);
     } else {
+      red = new Enemy(width / 2, height / 2);
       red.draw();
       red.fight(player);
     }

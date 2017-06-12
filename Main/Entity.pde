@@ -63,7 +63,16 @@ public class Pokecenter extends Entity {
     sprite = loadImage("Pokecenter.png");
   }
 
-  private void heal () {
+  private void heal (Player p) {
+    float d = dist(xCor, yCor + 60, p.xCor, p.yCor);
+    if (d <= 10) {
+      for (Pokemon poke : p.party) {
+        if (poke.hp != poke.maxHP) {
+          poke.hp = poke.maxHP;
+          System.out.println("Healed " + poke.name);
+        }
+      }
+    }
   }
 
   public void draw () {
