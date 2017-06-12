@@ -1,4 +1,5 @@
 Player player;
+Map map;
 float speed = 15;
 String state = "map";
 Battle battle;
@@ -8,7 +9,9 @@ boolean showEnemy = true;
 public void setup () {
   size(500, 500);
   background(0, 0, 0);
+
   player = new Player(width / 2, height / 2);
+  map = new Map(player);
   //battle = new Battle(player, new Enemy(0, 0), false);
   //battle.choice = "pokemon";
   e = new Enemy(210, 210);
@@ -16,8 +19,9 @@ public void setup () {
 
 public void draw () {
   if (state == "map") {
-    background(0, 255, 0);
-    player.draw();
+    //background(0, 255, 0);
+    //player.draw();
+    map.draw();
     if (showEnemy) {
       e.draw();
       e.fight(player);
@@ -32,23 +36,24 @@ public void keyPressed () {
 
   // Movement
   if (state == "map") {
-    if (key == 'w') {
+    if (key == 'w' || keyCode == UP) {
       walk("up");
     }
-    if (key == 'a') {
+    if (key == 'a' || keyCode == LEFT) {
       walk("left");
     }
-    if (key == 's') {
+    if (key == 's' || keyCode == DOWN) {
       walk("down");
     }
-    if (key == 'd') {
+    if (key == 'd' || keyCode == RIGHT) {
       walk("right");
     }
   }
 
   if (state == "battle") {
-    if (!battle.choice.equals("none") && key == 'b') {
+    if (!battle.choice.equals("none") && key == 'z') {
       battle.choice = "none";
+      battle.delay = 0;
     }
     // Main battle screen
     if (battle.choice.equals("none")) {
@@ -87,14 +92,14 @@ public void keyPressed () {
     //bag screen
     /*
       if (battle.choice.equals("bag") && battle.delay > 40){
-        if (key == '1') {
-          player.party.add(battle.enemyPoke);
-          battle = null;
-          state = "map"; 
-        }
-      }
+     if (key == '1') {
+     player.party.add(battle.enemyPoke);
+     battle = null;
+     state = "map"; 
+     }
+     }
      */
-    
+
     // Pokemon choice screen
     if (battle.choice.equals("pokemon") && battle.delay > 40) {
       if (key == '1') {
@@ -122,14 +127,14 @@ public void keyPressed () {
         battle.enemyTurn();
       }
     }
-    
+
     if (key == 'l') {
-      battle.yourPoke.hp -= 10;
+      battle.yourPoke.hp = 0;
     }
     if (key == 'w') {
-      battle.enemyPoke.hp -= 10;
+      battle.enemyPoke.hp = 0;
     }
-    if (key == ENTER && battle.winScreen) {
+    if (key == 'x' && battle.winScreen) {
       battle = null;
       state = "map";
     }
@@ -137,10 +142,13 @@ public void keyPressed () {
 }
 
 public void walk (String direction) {
-  float cons = 11.0;
+  float cons = 60.0;
   switch (direction) {
   case "up" :
-    player.yCor = max(player.yCor - (1 * speed), cons);
+    float newY = player.yCor - (1 * speed);
+    if (!(player.xCor > 335 && newY < 130 && state == "map")) {
+      player.yCor = max(player.yCor - (1 * speed), cons);
+    }
     break;
   case "down" :
     player.yCor = min(player.yCor + (1 * speed), height - cons);
@@ -149,7 +157,11 @@ public void walk (String direction) {
     player.xCor = max(player.xCor - (1 * speed), cons);
     break;
   case "right" : 
-    player.xCor = min(player.xCor + (1 * speed), width - cons);
+    float newX = player.xCor + (1 * speed);
+    if (!(player.yCor < 130 && newX > 335) && state == "map") {
+      player.xCor = min(player.xCor + (1 * speed), width - cons);
+    }
+    break;
   default :
     break;
   }

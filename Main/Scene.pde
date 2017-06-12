@@ -8,9 +8,27 @@ public abstract class Scene { //<>// //<>// //<>// //<>// //<>// //<>// //<>// /
 public class Map extends Scene {
 
   // Add enemies, roads, buildings, trees, etc
+  Pokecenter pCenter = new Pokecenter(400, 75);
+
+  public Map (Player p) {
+    player = p;
+  }
 
   public void draw () {
-    background(0, 255, 0);
+    imageMode(CENTER);
+    image(loadImage("Grass.png"), width / 2, height / 2, 500, 500);
+    for (int count = 25; count < width; count += 50) {
+      image(loadImage("Tree.png"), count, height - 25, 50, 50);
+      if (count != 225) {
+        image(loadImage("Tree.png"), count, 25, 50, 50);
+      }
+    }
+    for (int count = 25; count < height; count += 50) {
+      image(loadImage("Tree.png"), width - 25, count, 50, 50);
+      image(loadImage("Tree.png"), 25, count, 50, 50);
+    }
+    pCenter.draw();
+    player.draw();
   }
 }
 
@@ -119,7 +137,10 @@ public class Battle extends Scene {
         } else {
           event(yourPoke.name + " used " + moveUsed.name, "none");
         }
-      } else {
+      } /*else if (choice == "justSwitched") {
+       event("Go " + yourPoke.name, "none");
+       } */
+      else {
         bottom();
       }
     }
@@ -238,7 +259,7 @@ public class Battle extends Scene {
     if (num - 1 < player.party.size()) {
       Pokemon newPoke = player.party.get(num - 1);
       yourPoke = newPoke;
-      choice = "none";
+      //choice = "justSwitched";
       delay = 0;
     }
   }
@@ -256,7 +277,7 @@ public class Battle extends Scene {
   }
 
   public void event (String str, String nextState) {
-    textScreen(str);
+    textScreen(str.replace("_", " "));
     if (delay == 50) {
       choice = nextState;
       delay = 0;
@@ -266,8 +287,12 @@ public class Battle extends Scene {
   }
 
   public void update () {
-    if ((player.party.size() == 1) && yourPoke.hp <= 0) {
-      deathScreen = true;
+    if (yourPoke.hp <= 0) {
+      if (player.party.size() == 1) {
+        deathScreen = true;
+      } else {
+        choice = "pokemon";
+      }
     }
     if ((enemy.party.size() == 0) && (enemyPoke.hp <= 0)) {
       e = null;
@@ -275,7 +300,7 @@ public class Battle extends Scene {
       winScreen = true;
     }
     if (!isYourTurn && choice == "none") {
-     enemyTurn(); 
+      enemyTurn();
     }
   }
 
@@ -319,5 +344,4 @@ public class Battle extends Scene {
     isYourTurn = true;
     choice = "justAttacked";
   }
-  
 }
