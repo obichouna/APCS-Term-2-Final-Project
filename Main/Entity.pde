@@ -16,9 +16,6 @@ public class Player extends Entity {
     yCor = y;
     sprite = loadImage("Player.png");
     party.add(new Pokemon(0));
-    party.add(new Pokemon(1));
-    party.add(new Pokemon(2));
-    party.add(new Pokemon(3));
   }
 
   public void draw () {
@@ -35,6 +32,7 @@ public class Enemy extends Entity {
     yCor = y;
     sprite = loadImage("Red.png");
     party.push(new Pokemon(0));
+    party.push(new Pokemon(1));
   }
 
   public Enemy (float num) {

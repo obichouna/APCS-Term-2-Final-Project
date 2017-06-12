@@ -36,14 +36,20 @@ public class Battle extends Scene {
         delay++;
       } else if (choice == "win") {
         if (isTrainer) {
-          event("Red's " + enemyPoke.name + " fainted", "map", true);
+          event("You defeated Red", "map", true);
         } else {
           event("The wild " + enemyPoke.name + " fainted", "map", true);
         }
       } else if (choice == "lose") {
         event("You blacked out", "map", true);
       } else if (choice == "cantRun") {
-        event("Cant run from a trainer battle", "none", false);
+        event("Can't run from a trainer battle", "none", false);
+      } else if (choice == "cantThrow") {
+        event("Can't catch a trainer's pokemon", "none", false);
+      } else if (choice == "badThrow") {
+        event("Failed to catch " + enemyPoke.name, "none", false);
+      } else  if (choice == "goodThrow") {
+        event("Caught the wild " + enemyPoke.name, "map", true);
       } else if (choice == "run") {
         event("Successfully got away", "map", true);
       } else if (choice == "justAttacked") {
@@ -59,8 +65,7 @@ public class Battle extends Scene {
         bag();
       } else if (choice == "healed") {
         event ("You healed " + yourPoke.name, "none", false);
-      } else if (choice == "threwBall") { 
-         
+      } else if (choice == "threwBall") {
       } else {
         bottom();
       }
@@ -175,7 +180,7 @@ public class Battle extends Scene {
     }
     textScreen ("Choose a Pokemon");
   }
-  
+
   public void bag () {
     // Base rectangle
     fill(0, 0, 0);
@@ -199,14 +204,25 @@ public class Battle extends Scene {
       delay = 0;
     }
   }
-  
+
   public void potion () {
     yourPoke.hp = min(yourPoke.hp += 20, yourPoke.maxHP);
     choice = "healed";
   }
-  
+
   public void throwBall () {
-    
+    if (isTrainer) {
+      choice = "cantThrow";
+    } else {
+      if (floor(random(1)) == 0) {
+        if (pSize < 6) {
+          player.party.add(enemyPoke);
+        }
+        choice = "goodThrow";
+      } else {
+        choice = "badThrow";
+      }
+    }
   }
 
   public void run () {
@@ -248,9 +264,13 @@ public class Battle extends Scene {
         choice = "pokemon";
       }
     }
-    if ((enemy.party.size() == 0) && (enemyPoke.hp <= 0)) {
-      showEnemy = false;
+    if (enemyPoke.hp <= 0) {
+      if (enemy.party.size() > 0) {
+        enemyPoke = enemy.party.pop();
+        //choice = "eFainted";
+      } else {
       choice = "win";
+      }
     }
     if (!isYourTurn && choice == "none") {
       enemyTurn();

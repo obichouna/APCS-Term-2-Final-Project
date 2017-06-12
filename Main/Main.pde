@@ -2,7 +2,7 @@ Player player;
 Map map, boss;
 int count = 0;
 float speed = 15.0, wall = 60.0;
-String state = "boss", nextState;
+String state = "start", nextState;
 Battle battle;
 Enemy e;
 boolean showEnemy = true;
@@ -59,10 +59,11 @@ public void keyPressed () {
   }
   // Battle
   if (state == "battle") {
-    if ((battle.choice == "justAttacked" || battle.choice == "cantRun") && keyCode == ENTER) {
+    if ((battle.choice == "justAttacked" || battle.choice == "cantRun" || battle.choice == "cantThrow") && keyCode == ENTER) {
       battle.choice = battle.nextChoice;
     }
-    if ((battle.choice == "win" || battle.choice == "run" || battle.choice == "lose") && keyCode == ENTER) {
+    // Choices that exit the battle
+    if ((battle.choice == "win" || battle.choice == "run" || battle.choice == "lose" || battle.choice == "goodThrow") && keyCode == ENTER) {
       state = nextState;
     }
     if (!battle.choice.equals("none") && keyCode == BACKSPACE) {
@@ -84,7 +85,7 @@ public void keyPressed () {
         battle.run();
       }
     }
-    if ((battle.choice == "justSwitched" || battle.choice == "healed") && keyCode == ENTER) {
+    if ((battle.choice == "justSwitched" || battle.choice == "healed" || battle.choice == "badThrow") && keyCode == ENTER) {
       battle.choice = battle.nextChoice;
       battle.enemyTurn();
     }
