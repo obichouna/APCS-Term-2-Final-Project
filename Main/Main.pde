@@ -1,7 +1,8 @@
 Player player;
-Map map;
-float speed = 15;
-String state = "map";
+Map map, boss;
+int count = 0;
+float speed = 15.0, wall;
+String state = "start", nextState;
 Battle battle;
 Enemy e;
 boolean showEnemy = true;
@@ -12,20 +13,18 @@ public void setup () {
 
   player = new Player(width / 2, height / 2);
   map = new Map(player);
-  //battle = new Battle(player, new Enemy(0, 0), false);
-  //battle.choice = "pokemon";
   e = new Enemy(210, 210);
 }
 
 public void draw () {
+  if (state == "start") {
+    startScreen();
+  }
+  if (state == "controls") {
+    controls();
+  }
   if (state == "map") {
-    //background(0, 255, 0);
-    //player.draw();
     map.draw();
-    if (showEnemy) {
-      e.draw();
-      e.fight(player);
-    }
   }
   if (state == "battle") {
     battle.draw();
@@ -34,24 +33,42 @@ public void draw () {
 
 public void keyPressed () {
 
+  if (state == "start" && keyCode == ENTER) {
+    state = "controls";
+  }
+  if (state == "controls" && count >= 50 && keyCode == ENTER) {
+    state = "map";
+    count = 0;
+  }
   // Movement
-  if (state == "map") {
-    if (key == 'w' || keyCode == UP) {
-      walk("up");
-    }
-    if (key == 'a' || keyCode == LEFT) {
-      walk("left");
-    }
-    if (key == 's' || keyCode == DOWN) {
-      walk("down");
-    }
-    if (key == 'd' || keyCode == RIGHT) {
-      walk("right");
+  if (state == "map" || state == "boss") {
+    if (state == "map") {
+      wall = 60.0;
+    } else {
+      wall = 120.0;
     }
   }
-
+  if (key == 'w' || keyCode == UP) {
+    walk("up");
+  }
+  if (key == 'a' || keyCode == LEFT) {
+    walk("left");
+  }
+  if (key == 's' || keyCode == DOWN) {
+    walk("down");
+  }
+  if (key == 'd' || keyCode == RIGHT) {
+    walk("right");
+  }
+  // Battle
   if (state == "battle") {
-    if (!battle.choice.equals("none") && key == 'z') {
+    if ((battle.choice == "justAttacked" || battle.choice == "cantRun") && keyCode == ENTER) {
+      battle.choice = battle.nextChoice;
+    }
+    if ((battle.choice == "win" || battle.choice == "run") && keyCode == ENTER) {
+      state = nextState;
+    }
+    if (!battle.choice.equals("none") && keyCode == BACKSPACE) {
       battle.choice = "none";
       battle.delay = 0;
     }
@@ -67,108 +84,99 @@ public void keyPressed () {
         battle.choice = "pokemon";
       }
       if (key == '4') {
-        battle.choice = "run";
+        battle.run();
       }
     }
-    // Fight screen
-    if (battle.choice.equals("fight") && battle.isYourTurn && battle.delay > 40) {
-      if (key == '1') {
-        battle.moveUsed = battle.yourPoke.moves.get(0);
-        battle.yourTurn();
+    if (battle.choice == "justSwitched" && keyCode == ENTER) {
+      battle.choice = battle.nextChoice;
+      battle.enemyTurn();
+    }
+    // Choices for the choices
+    if (battle.delay > 40) {
+      // Moves
+      if (battle.choice.equals("fight")) {
+        if (key == '1') {
+          battle.moveUsed = battle.yourPoke.moves.get(0);
+          battle.yourTurn();
+        }
+        if (key == '2') {
+          battle.moveUsed = battle.yourPoke.moves.get(1);
+          battle.yourTurn();
+        }
+        if (key == '3') {
+          battle.moveUsed = battle.yourPoke.moves.get(2);
+          battle.yourTurn();
+        }
+        if (key == '4') {
+          battle.moveUsed = battle.yourPoke.moves.get(3);
+          battle.yourTurn();
+        }
       }
-      if (key == '2') {
-        battle.moveUsed = battle.yourPoke.moves.get(1);
-        battle.yourTurn();
+      // Bag
+      if (battle.choice.equals("bag")) {
+        if (key == '1') {
+        }
+        if (key == '2') {
+        }
       }
-      if (key == '3') {
-        battle.moveUsed = battle.yourPoke.moves.get(2);
-        battle.yourTurn();
-      }
-      if (key == '4') {
-        battle.moveUsed = battle.yourPoke.moves.get(3);
-        battle.yourTurn();
+      // Pokemon
+      if (battle.choice.equals("pokemon")) {
+        if (key == '1') {
+          battle.switchOut(0);
+        }
+        if (key == '2') {
+          battle.switchOut(1);
+        }
+        if (key == '3') {
+          battle.switchOut(2);
+        }
+        if (key == '4') {
+          battle.switchOut(3);
+        }
+        if (key == '5') {
+          battle.switchOut(4);
+        }
+        if (key == '6') {
+          battle.switchOut(5);
+        }
       }
     }
-    //bag screen
-    /*
-      if (battle.choice.equals("bag") && battle.delay > 40){
-     if (key == '1') {
-     player.party.add(battle.enemyPoke);
-     battle = null;
-     state = "map"; 
-     }
-     }
-     */
-
-    // Pokemon choice screen
-    if (battle.choice.equals("pokemon") && battle.delay > 40) {
-      if (key == '1') {
-        battle.switchOut(1);
-        battle.enemyTurn();
-      }
-      if (key == '2') {
-        battle.switchOut(2);
-        battle.enemyTurn();
-      }
-      if (key == '3') {
-        battle.switchOut(3);
-        battle.enemyTurn();
-      }
-      if (key == '4') {
-        battle.switchOut(4);
-        battle.enemyTurn();
-      }
-      if (key == '5') {
-        battle.switchOut(5);
-        battle.enemyTurn();
-      }
-      if (key == '6') {
-        battle.switchOut(6);
-        battle.enemyTurn();
-      }
-    }
-
+    // Cheats
     if (key == 'l') {
       battle.yourPoke.hp = 0;
     }
     if (key == 'w') {
       battle.enemyPoke.hp = 0;
     }
-    if (key == 'x' && battle.winScreen) {
-      battle = null;
-      state = "map";
-    }
   }
 }
 
 public void walk (String direction) {
-  float cons = 60.0;
   switch (direction) {
   case "up" :
     float newY = player.yCor - (1 * speed);
     if (!(player.xCor > 335 && newY < 130 && state == "map")) {
-      player.yCor = max(player.yCor - (1 * speed), cons);
+      player.yCor = max(player.yCor - (1 * speed), wall);
     }
     break;
   case "down" :
-    player.yCor = min(player.yCor + (1 * speed), height - cons);
+    player.yCor = min(player.yCor + (1 * speed), height - wall);
     break;
   case "left" :
-    player.xCor = max(player.xCor - (1 * speed), cons);
+    player.xCor = max(player.xCor - (1 * speed), wall);
     break;
   case "right" : 
     float newX = player.xCor + (1 * speed);
     if (!(player.yCor < 130 && newX > 335) && state == "map") {
-      player.xCor = min(player.xCor + (1 * speed), width - cons);
+      player.xCor = min(player.xCor + (1 * speed), width - wall);
     }
     break;
   default :
     break;
   }
-  //encounter();
+  encounter();
 }
 
-// For demo purposes
 public void encounter () {
   int rand = floor(random(40));
   if (rand == 13) {
@@ -177,19 +185,28 @@ public void encounter () {
   }
 }
 
-/*
-void keyReleased() {
- if (key == 'w') {
- player.direction =
- }
- if (key == 'a') {
- player.direction =
- }
- if (key == 's') {
- player.direction =
- }
- if (key == 'd') {
- player.direction =
- }
- }
- */
+private void startScreen () {
+  background(0, 0, 0);
+  fill(255, 255, 255);
+  textAlign(CENTER);
+  textSize(100);
+  text("POKEMON", width / 2, 100);
+  textSize(25);
+  text("By Othman Bichouna", width / 2, 200);
+  text("and Ahbab Ashraf", width / 2, 230);
+  text("Press ENTER", width / 2, 450);
+}
+
+private void controls () {
+  background(0, 0, 0);
+  fill(255, 255, 255);
+  textAlign(CENTER);
+  textSize(75);
+  text("CONTROLS", width / 2, 100);
+  textSize(25);
+  text("Use the arrow keys or WASD to move", width / 2, 200);
+  text("Use ENTER to confirm or interact", width / 2, 230);
+  text("Use BACKSPACE to cancel a choice", width / 2, 260);
+  text("Press ENTER", width / 2, 450);
+  count++;
+}
