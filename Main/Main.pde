@@ -14,7 +14,7 @@ public void setup () {
   player = new Player(width / 2, height / 2);
   map = new Map(player, false);
   boss = new Map(player, true);
-  e = new Enemy(210, 210);
+  //battle = new Battle(player, new Enemy(0.0), false);
 }
 
 public void draw () {
@@ -43,6 +43,10 @@ public void keyPressed () {
   if (state == "controls" && count >= 50 && keyCode == ENTER) {
     state = "map";
     count = 0;
+  }
+  if (state == "map" && key == 'b') {
+    battle = new Battle(player, new Enemy(0.0), false);
+    state = "battle";
   }
   // Movement
   if (key == 'w' || keyCode == UP) {

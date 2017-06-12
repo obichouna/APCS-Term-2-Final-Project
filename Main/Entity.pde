@@ -31,12 +31,13 @@ public class Enemy extends Entity {
     xCor = x;
     yCor = y;
     sprite = loadImage("Red.png");
-    party.push(new Pokemon(0));
-    party.push(new Pokemon(1));
+    for (int i = 0; i < 6; i++) {
+      party.push(new Pokemon(i));
+    }
   }
 
   public Enemy (float num) {
-    party.push(new Pokemon(floor(random(4))));
+    party.push(new Pokemon(floor(random(6))));
   }
 
   public void fight (Player p) {

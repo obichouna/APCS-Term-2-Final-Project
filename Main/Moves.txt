@@ -3,4 +3,4 @@ Water_Gun WATER null 40 25 100 false
 Bubble_Beam WATER null 65 20 100 false
 Thunderbolt ELECTRIC para 90 15 100 false
 Rock_Throw ROCK flinch 50 15 90 false
-Razor Leaf GRASS crit 55 25 95 false
+Razor_Leaf GRASS crit 55 25 95 false

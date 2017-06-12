@@ -2,4 +2,5 @@ Pikachu Electric 50 35 55 40 50 50 90 0 1 2 3 Pikachu.png Pikachu_back.png
 Charizard Fire 50 78 84 78 109 85 100 0 1 2 3 Charizard.png Charizard_back.png
 Blastoise Water 50 79 83 100 85 105 78 0 1 2 3 Blastoise.png Blastoise_back.png
 Venusaur Grass 50 80 82 83 100 100 80 0 1 2 3 Venusaur.png Venusaur_back.png
-
+Lapras Water 50 130 85 80 85 95 60 0 1 2 3 Lapras.png Lapras_back.png
+Snorlax Normal 50 160 110 65 65 110 30 0 1 2 3 Snorlax.png Snorlax_back.png
