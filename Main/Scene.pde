@@ -7,7 +7,7 @@ public abstract class Scene {
 
 public class Map extends Scene {
 
-  // Add enemies, roads, buildings, trees, etc
+  Enemy red;
   Pokecenter pCenter;
   ArrayList<LongGrass> grass;
   boolean isBoss;
@@ -17,7 +17,6 @@ public class Map extends Scene {
     player = p;
     grass = new ArrayList<LongGrass>();
     isBoss = bool;
-    d = new Door(225, 475, "map", 225, 75);
     if (!isBoss) {
       d = new Door(225, 25, "boss", 225, 425);
       pCenter = new Pokecenter(400, 75);
@@ -28,6 +27,9 @@ public class Map extends Scene {
         grass.add(new LongGrass(count, 425));
         grass.add(new LongGrass(count, 450));
       }
+    } else {
+      d = new Door(225, 475, "map", 225, 75);
+      red = new Enemy(width / 2, height / 2);
     }
   }
 
@@ -57,6 +59,9 @@ public class Map extends Scene {
     }
     if (!isBoss) {
       pCenter.draw();
+    } else {
+      red.draw();
+      red.fight(player);
     }
     player.draw();
     d.transport(player);

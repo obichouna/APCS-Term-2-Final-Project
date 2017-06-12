@@ -2,7 +2,7 @@ Player player;
 Map map, boss;
 int count = 0;
 float speed = 15.0, wall = 60.0;
-String state = "boss", nextState;
+String state = "map", nextState;
 Battle battle;
 Enemy e;
 boolean showEnemy = true;

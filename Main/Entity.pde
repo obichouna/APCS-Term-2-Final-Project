@@ -14,7 +14,7 @@ public class Player extends Entity {
   public Player (float x, float y) {
     xCor = x;
     yCor = y;
-    sprite = loadImage("Player_front.png");
+    sprite = loadImage("Player.png");
     party.add(new Pokemon(0));
     party.add(new Pokemon(1));
     party.add(new Pokemon(2));
@@ -24,8 +24,6 @@ public class Player extends Entity {
   public void draw () {
     imageMode(CENTER);
     image(sprite, xCor, yCor, 50, 50);
-    fill(0, 0, 255);
-    //rect(xCor, yCor, 10, 10);
   }
 }
 
@@ -35,6 +33,7 @@ public class Enemy extends Entity {
   public Enemy (float x, float y) {
     xCor = x;
     yCor = y;
+    sprite = loadImage("Red.png");
     party.push(new Pokemon(0));
   }
 
@@ -51,8 +50,8 @@ public class Enemy extends Entity {
   }
 
   public void draw () {
-    fill(255, 0, 0);
-    rect(xCor, yCor, 10, 10);
+    imageMode(CENTER);
+    image(sprite, xCor, yCor, 50, 50);
   }
 }
 
@@ -63,9 +62,8 @@ public class Pokecenter extends Entity {
     yCor = y;
     sprite = loadImage("Pokecenter.png");
   }
-  
+
   private void heal () {
-    
   }
 
   public void draw () {
@@ -100,7 +98,7 @@ public class LongGrass extends Entity {
 }
 
 public class Door extends Entity {
-  
+
   String  target;
   float exitX, exitY;
 
@@ -110,9 +108,8 @@ public class Door extends Entity {
     target = str;
     exitX = eX;
     exitY = eY;
-    sprite = null;
   }
-  
+
   private void transport (Player p) {
     float d = dist(xCor, yCor, p.xCor, p.yCor);
     if (d <= 40) {
