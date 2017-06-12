@@ -2,7 +2,7 @@ Player player;
 Map map, boss;
 int count = 0;
 float speed = 15.0, wall = 60.0;
-String state = "map", nextState;
+String state = "boss", nextState;
 Battle battle;
 Enemy e;
 boolean showEnemy = true;
@@ -75,7 +75,7 @@ public void keyPressed () {
         battle.choice = "fight";
       }
       if (key == '2') {
-        //battle.choice = "bag";
+        battle.choice = "bag";
       }
       if (key == '3') {
         battle.choice = "pokemon";
@@ -84,7 +84,7 @@ public void keyPressed () {
         battle.run();
       }
     }
-    if (battle.choice == "justSwitched" && keyCode == ENTER) {
+    if ((battle.choice == "justSwitched" || battle.choice == "healed") && keyCode == ENTER) {
       battle.choice = battle.nextChoice;
       battle.enemyTurn();
     }
@@ -112,8 +112,10 @@ public void keyPressed () {
       // Bag
       if (battle.choice.equals("bag")) {
         if (key == '1') {
+          battle.potion();
         }
         if (key == '2') {
+          battle.throwBall();
         }
       }
       // Pokemon

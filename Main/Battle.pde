@@ -54,6 +54,13 @@ public class Battle extends Scene {
         }
       } else if (choice == "justSwitched") {
         event("Go " + yourPoke.name + "!", "none", false);
+      } else if (choice == "bag") {
+        delay++;
+        bag();
+      } else if (choice == "healed") {
+        event ("You healed " + yourPoke.name, "none", false);
+      } else if (choice == "threwBall") { 
+         
       } else {
         bottom();
       }
@@ -168,6 +175,21 @@ public class Battle extends Scene {
     }
     textScreen ("Choose a Pokemon");
   }
+  
+  public void bag () {
+    // Base rectangle
+    fill(0, 0, 0);
+    rect(0, 390, width, 110);
+    // White rectangles
+    fill(255, 255, 255);
+    rect(7, 400, width / 2 - 10, 90, 10);
+    rect(width / 2 + 7, 400, width / 2 - 15, 90, 10);
+    fill(0, 0, 0);
+    textSize(40);
+    textAlign(CENTER);
+    text("Potion", width / 4, 455);
+    text("Pokeball", 3 * width / 4, 455);
+  }
 
   public void switchOut (int num) {
     if (num < player.party.size()) {
@@ -176,6 +198,15 @@ public class Battle extends Scene {
       choice = "justSwitched";
       delay = 0;
     }
+  }
+  
+  public void potion () {
+    yourPoke.hp = min(yourPoke.hp += 20, yourPoke.maxHP);
+    choice = "healed";
+  }
+  
+  public void throwBall () {
+    
   }
 
   public void run () {
