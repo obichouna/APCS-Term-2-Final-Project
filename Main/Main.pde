@@ -1,8 +1,8 @@
 Player player;
 Map map, boss;
 int count = 0;
-float speed = 15.0, wall;
-String state = "start", nextState;
+float speed = 15.0, wall = 60.0;
+String state = "boss", nextState;
 Battle battle;
 Enemy e;
 boolean showEnemy = true;
@@ -12,7 +12,8 @@ public void setup () {
   background(0, 0, 0);
 
   player = new Player(width / 2, height / 2);
-  map = new Map(player);
+  map = new Map(player, false);
+  boss = new Map(player, true);
   e = new Enemy(210, 210);
 }
 
@@ -25,6 +26,9 @@ public void draw () {
   }
   if (state == "map") {
     map.draw();
+  }
+  if (state == "boss") {
+    boss.draw();
   }
   if (state == "battle") {
     battle.draw();
@@ -41,13 +45,6 @@ public void keyPressed () {
     count = 0;
   }
   // Movement
-  if (state == "map" || state == "boss") {
-    if (state == "map") {
-      wall = 60.0;
-    } else {
-      wall = 120.0;
-    }
-  }
   if (key == 'w' || keyCode == UP) {
     walk("up");
   }
@@ -155,7 +152,7 @@ public void walk (String direction) {
   switch (direction) {
   case "up" :
     float newY = player.yCor - (1 * speed);
-    if (!(player.xCor > 335 && newY < 130 && state == "map")) {
+    if (!(player.xCor > 335 && newY < 130)) {
       player.yCor = max(player.yCor - (1 * speed), wall);
     }
     break;
@@ -167,7 +164,7 @@ public void walk (String direction) {
     break;
   case "right" : 
     float newX = player.xCor + (1 * speed);
-    if (!(player.yCor < 130 && newX > 335) && state == "map") {
+    if (!(player.yCor < 130 && newX > 335)) {
       player.xCor = min(player.xCor + (1 * speed), width - wall);
     }
     break;
@@ -177,11 +174,9 @@ public void walk (String direction) {
   encounter();
 }
 
-public void encounter () {
-  int rand = floor(random(40));
-  if (rand == 13) {
-    battle = new Battle(player, new Enemy(0, 0), false);
-    state = "battle";
+private void encounter () {
+  for (LongGrass g : map.grass) {
+    g.steppedOn(player);
   }
 }
 

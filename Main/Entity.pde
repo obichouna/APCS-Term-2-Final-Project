@@ -38,6 +38,10 @@ public class Enemy extends Entity {
     party.push(new Pokemon(0));
   }
 
+  public Enemy (float num) {
+    party.push(new Pokemon(floor(random(4))));
+  }
+
   public void fight (Player p) {
     float d = dist(xCor, yCor, p.xCor, p.yCor);
     if (d <= 15) {
@@ -59,11 +63,67 @@ public class Pokecenter extends Entity {
     yCor = y;
     sprite = loadImage("Pokecenter.png");
   }
-
-
+  
+  private void heal () {
+    
+  }
 
   public void draw () {
     imageMode(CENTER);
     image(sprite, xCor, yCor, 140, 112);
+  }
+}
+
+public class LongGrass extends Entity {
+
+  public LongGrass (float x, float y) {
+    xCor = x;
+    yCor = y;
+    sprite = loadImage("Grass_long.png");
+  }
+
+  public void steppedOn (Player p) {
+    float d = dist(xCor, yCor, p.xCor, p.yCor);
+    if (d <= 6) {
+      int rand = floor(random(20));
+      if (rand == 13) {
+        battle = new Battle(p, new Enemy(0), false);
+        state = "battle";
+      }
+    }
+  }
+
+  public void draw () {
+    imageMode(CENTER);
+    image(sprite, xCor, yCor, 25, 25);
+  }
+}
+
+public class Door extends Entity {
+  
+  String  target;
+  float exitX, exitY;
+
+  public Door (float x, float y, String str, float eX, float eY) {
+    xCor = x;
+    yCor = y;
+    target = str;
+    exitX = eX;
+    exitY = eY;
+    sprite = null;
+  }
+  
+  private void transport (Player p) {
+    float d = dist(xCor, yCor, p.xCor, p.yCor);
+    if (d <= 40) {
+      state = target;
+      p.xCor = exitX;
+      p.yCor = exitY;
+    }
+  }
+
+  public void draw () {
+    fill(0, 0, 0);
+    rect(xCor, yCor, 10, 10);
   }
 }

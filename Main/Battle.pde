@@ -11,11 +11,15 @@ public class Battle extends Scene {
     isTrainer = bool;
     player = p;
     enemy = e;
-    yourPoke = player.party.get(0);
-    enemyPoke = enemy.party.pop();
-    if (enemyPoke.spd > yourPoke.spd) {
-      isYourTurn = false;
+    int count = 0;
+    while (player.party.get(count).hp == 0) {
+      count++;
     }
+    yourPoke = player.party.get(count);
+    enemyPoke = enemy.party.pop();
+    //if (enemyPoke.spd > yourPoke.spd) {
+      //isYourTurn = false;
+    //}
   }
 
   public void draw () {
